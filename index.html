@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="fa" >
+<html lang="fa">
 <head>
   <meta charset="UTF-8" />
   <title>جدول قالب‌ها - محاسبات فنی</title>
@@ -7,58 +8,10 @@
     body {
       font-family: Tahoma, sans-serif;
       direction: rtl;
-      background: #f7f9fc;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
+      background-color: #f7f9fc;
+      margin: 20px;
+      color: #333;
     }
-    /* صفحه خوش آمدگویی */
-    #welcomeScreen {
-      position: fixed;
-      inset: 0;
-      background: #007bff;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 30px;
-      text-align: center;
-      z-index: 9999;
-    }
-    #welcomeScreen h1 {
-      font-size: 2.8rem;
-      margin-bottom: 10px;
-    }
-    #welcomeScreen p {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-      max-width: 500px;
-      line-height: 1.4;
-    }
-    #welcomeScreen button {
-      background: white;
-      color: #007bff;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 30px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    #welcomeScreen button:hover {
-      background: #e6e6e6;
-    }
-    
-    /* صفحه اصلی */
-    #mainContent {
-      display: none;
-      padding: 20px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    
-    /* استایل‌های اصلی */
     h2 { margin-bottom: 10px; }
     .info-text { font-size: 13px; color: #555; margin-bottom: 10px; }
     .input-row {
@@ -79,40 +32,39 @@
       font-size: 14px;
       border: 1px solid #bbb;
       border-radius: 4px;
+      width: 100%;
+      box-sizing: border-box;
     }
     button {
-      background: #007bff;
-      color: white;
+      background-color: #007bff;
       border: none;
+      color: white;
       padding: 8px 18px;
       border-radius: 4px;
       cursor: pointer;
+      font-size: 14px;
       transition: 0.3s;
+      height: 38px;
+      align-self: flex-end;
     }
-    button:hover {
-      background: #0056b3;
-    }
+    button:hover { background-color: #0056b3; }
+    .table-container { overflow-x: auto; margin-top: 10px; }
     table {
       min-width: 700px;
       border-collapse: collapse;
       background: white;
-      margin-top: 10px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     }
     th, td {
       border: 1px solid #ddd;
       padding: 8px 12px;
       text-align: center;
+      font-size: 14px;
     }
-    th {
-      background: #f0f0f0;
-    }
-    tbody tr:hover {
-      background: #f5faff;
-    }
-    #warnings ul {
-      list-style: none;
-      padding: 0;
-    }
+    th { background-color: #f0f0f0; font-weight: 600; }
+    tbody tr:hover { background-color: #f5faff; }
+    #warnings { margin-top: 12px; font-size: 14px; }
+    #warnings ul { list-style: none; padding: 0; }
     #warnings li {
       background: #fff3f3;
       border: 1px solid #ffcccc;
@@ -121,7 +73,7 @@
       border-radius: 4px;
       color: #c00;
     }
-    #printBtn, #saveBtn, #loadBtn {
+    #printBtn, #saveBtn {
       position: fixed;
       left: 20px;
       border: none;
@@ -130,51 +82,43 @@
       border-radius: 50px;
       font-size: 14px;
       box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+      z-index: 999;
       cursor: pointer;
-      z-index: 1000;
     }
-    #printBtn {
-      bottom: 20px;
-      background: #28a745;
-    }
-    #saveBtn {
-      bottom: 70px;
-      background: #ff9800;
-    }
-    #loadBtn {
-      bottom: 120px;
-      background: #17a2b8;
-    }
+    #printBtn { bottom: 20px; background-color: #28a745; }
+    #printBtn:hover { background-color: #1e7e34; }
+    #saveBtn { bottom: 70px; background: #ff9800; }
+    #saveBtn:hover { background: #e68900; }
   </style>
 </head>
 <body>
 
-<div id="welcomeScreen">
-  <h1>خوش آمدید!</h1>
-  <p>
-    این برنامه برای محاسبه درصد درگیری قوطی های فلزی طراحی شده است.<br />
-    مقادیر ورودی بر اساس 0.001 اینچ می‌باشد.<br />
-    هشدارهای لازم به صورت رنگی و متنی نمایش داده می‌شوند.<br />
-    شما می‌توانید گزارش‌ها را ذخیره، بارگذاری و پرینت کنید.
-  </p>
-  <p><strong>ساخته شده توسط: مهندس خانی</strong></p>
-  <button onclick="startApp()">شروع</button>
+<h2>برنامه محاسبه درصد درگیری قوطی فلزی- تهیه کننده: مصیب خانی کارشناس کنترل کیفیت کارخانه دشت مرغاب</h2>
+<p class="info-text">🔹 تمام مقادیر ورودی بر حسب<strong>0.001 اینچ</strong> هستند.</p>
+
+<div class="input-row">
+  <label>طول دوخت
+    <input type="number" id="length" min="0" step="0.01"/>
+  </label>
+  <label>ضخامت دوخت
+    <input type="number" id="seamThickness" min="0" step="0.01"/>
+  </label>
+  <label>قلاب درب
+    <input type="number" id="coverHook" min="0" step="0.01"/>
+  </label>
+  <label>قلاب بدنه
+    <input type="number" id="bodyHook" min="0" step="0.01"/>
+  </label>
+  <label>ضخامت ورق سر
+    <input type="number" id="headThickness" min="0" step="0.01"/>
+  </label>
+  <label>ضخامت ورق بدنه
+    <input type="number" id="bodyThickness" min="0" step="0.01"/>
+  </label>
+  <button onclick="addTemplate()">➕ افزودن قالب</button>
 </div>
 
-<div id="mainContent">
-  <h2>ورود اطلاعات قالب و محاسبه</h2>
-  <p class="info-text">🔹 تمام مقادیر بر اساس <strong>0.001 اینچ</strong> هستند.</p>
-
-  <div class="input-row">
-    <label>طول دوخت<input type="number" id="length" step="0.01"/></label>
-    <label>ضخامت دوخت<input type="number" id="seamThickness" step="0.01"/></label>
-    <label>قلاب درب<input type="number" id="coverHook" step="0.01"/></label>
-    <label>قلاب بدنه<input type="number" id="bodyHook" step="0.01"/></label>
-    <label>ضخامت ورق سر<input type="number" id="headThickness" step="0.01"/></label>
-    <label>ضخامت ورق بدنه<input type="number" id="bodyThickness" step="0.01"/></label>
-    <button onclick="addTemplate()">➕ افزودن قالب</button>
-  </div>
-
+<div class="table-container">
   <table id="resultsTable">
     <thead>
       <tr id="headerRow">
@@ -196,138 +140,156 @@
       <tr><td>تیز کردگی دوخت</td></tr>
     </tbody>
   </table>
-
-  <div id="warnings"><strong>⚠️ هشدارها:</strong><ul id="warningList"></ul></div>
-
-  <button id="printBtn" onclick="printReport()">🖨️ پرینت</button>
-  <button id="saveBtn" onclick="saveAsHTML()">💾 ذخیره HTML</button>
-  <button id="loadBtn" onclick="document.getElementById('fileInput').click()">📂 بارگذاری</button>
-  <input type="file" id="fileInput" style="display:none" accept=".html" onchange="loadHTMLFile(event)">
 </div>
+
+<div id="warnings"><strong>⚠️ هشدارها:</strong><ul id="warningList"></ul></div>
+
+<button id="printBtn" onclick="printReport()">🖨️ پرینت</button>
+<button id="saveBtn" onclick="saveAsHTML()">💾 ذخیره HTML</button>
 
 <script>
   let templateCount = 1;
 
-  function startApp() {
-    document.getElementById("welcomeScreen").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
-    document.getElementById("length").focus();
-  }
-
   function addTemplate() {
-    const ids = ['length','seamThickness','coverHook','bodyHook','headThickness','bodyThickness'];
-    const values = ids.map(id => parseFloat(document.getElementById(id).value));
-    if (values.some(v => isNaN(v) || v < 0)) {
-      alert("لطفاً همه فیلدها را با مقادیر عددی مثبت پر کنید.");
+    const inputs = ['length','seamThickness','coverHook','bodyHook','headThickness','bodyThickness']
+      .map(id => parseFloat(document.getElementById(id).value));
+
+    if (inputs.some(v => isNaN(v) || v < 0)) {
+      alert('لطفاً همه فیلدها را با مقادیر عددی مثبت پر کنید.');
       return;
     }
-    const [L,S,C,B,Hh,Bh] = values;
 
-    const hookDiff = Math.abs(C-B);
-    const freeSpace = Math.abs(S-(3*Hh+2*Bh));
-    const denominator = L-(2.2*Hh+1.1*Bh);
-    let overlap = denominator!==0 ? Math.abs((L-(C+B+1.1*Hh))/denominator*100) : 0;
+    const [length,seamThickness,coverHook,bodyHook,headThickness,bodyThickness] = inputs;
 
-    if(templateCount > 1){
-      const th=document.createElement("th");
-      th.textContent = `قالب ${templateCount}`;
-      document.getElementById("headerRow").appendChild(th);
+    const hookDiff = Math.abs(coverHook - bodyHook);
+    const freeSpace = Math.abs(seamThickness - (3 * headThickness + 2 * bodyThickness));
+    const denominator = length - (2.2 * headThickness + 1.1 * bodyThickness);
+    let overlap = 0;
+    if (denominator !== 0) {
+      overlap = Math.abs((length - (coverHook + bodyHook + 1.1 * headThickness)) / denominator * 100);
     }
 
-    const data=[L,S,C,B,Hh,Bh,hookDiff,freeSpace,overlap,"-","-"];
-    const rows=document.querySelectorAll("#tableBody tr");
-    rows.forEach((r,i)=>{
-      const td=document.createElement("td");
-      td.textContent=data[i].toFixed(2);
-      r.appendChild(td);
+    if (templateCount > 1) {
+      const newHeader = document.createElement('th');
+      newHeader.textContent = `قالب ${templateCount}`;
+      document.getElementById('headerRow').appendChild(newHeader);
+    }
+
+    const values = [
+      length.toFixed(2),
+      seamThickness.toFixed(2),
+      coverHook.toFixed(2),
+      bodyHook.toFixed(2),
+      headThickness.toFixed(2),
+      bodyThickness.toFixed(2),
+      hookDiff.toFixed(2),
+      freeSpace.toFixed(2),
+      overlap.toFixed(2),
+      '-',
+      '-'
+    ];
+
+    const rows = document.querySelectorAll('#tableBody tr');
+    rows.forEach((row, i) => {
+      const td = document.createElement('td');
+      td.textContent = values[i];
+      td.style.color = '';
+      row.appendChild(td);
     });
 
-    let warn = [];
-    if(overlap < 45){
-      rows[8].lastChild.style.color = "red";
-      warn.push("درصد درگیری کمتر از 45٪ است");
+    const col = templateCount;
+
+    let warningsForCurrentTemplate = [];
+
+    if (overlap < 45) {
+      rows[8].children[col].style.color = 'red';
+      warningsForCurrentTemplate.push('درصد درگیری کمتر از 45٪ است');
     }
-    if(hookDiff > 7.8){
-      rows[6].lastChild.style.color = "red";
-      warn.push("اختلاف قلاب بیشتر از 7.8 است");
+    if (hookDiff > 7.8) {
+      rows[6].children[col].style.color = 'red';
+      warningsForCurrentTemplate.push('اختلاف قلاب بیشتر از 7.8 است');
     }
-    if(freeSpace > 7.5){
-      rows[7].lastChild.style.color = "red";
-      warn.push("فضای آزاد بیشتر از 7.5 است");
+    if (freeSpace > 7.5) {
+      rows[7].children[col].style.color = 'red';
+      warningsForCurrentTemplate.push('فضای آزاد بیشتر از 7.5 است');
     }
-    if(C < 70){
-      rows[2].lastChild.style.color = "red";
-      warn.push("قلاب درب کمتر از 70 است");
+    if (coverHook < 70) {
+      rows[2].children[col].style.color = 'red';
+      warningsForCurrentTemplate.push('قلاب درب کمتر از 70 است');
     }
-    if(B < 70){
-      rows[3].lastChild.style.color = "red";
-      warn.push("قلاب بدنه کمتر از 70 است");
+    if (bodyHook < 70) {
+      rows[3].children[col].style.color = 'red';
+      warningsForCurrentTemplate.push('قلاب بدنه کمتر از 70 است');
     }
 
-    if(warn.length > 0){
-      const li = document.createElement("li");
-      li.textContent = `قالب ${templateCount}: ${warn.join("، ")}`;
-      document.getElementById("warningList").appendChild(li);
+    if (warningsForCurrentTemplate.length > 0) {
+      const warningList = document.getElementById('warningList');
+      const li = document.createElement('li');
+      li.textContent = `قالب ${col}: ${warningsForCurrentTemplate.join('، ')}`;
+      warningList.appendChild(li);
     }
 
-    document.getElementById("length").value = "";
-    document.getElementById("seamThickness").value = "";
-    document.getElementById("coverHook").value = "";
-    document.getElementById("bodyHook").value = "";
-    document.getElementById("length").focus();
+    document.getElementById('length').value = '';
+    document.getElementById('seamThickness').value = '';
+    document.getElementById('coverHook').value = '';
+    document.getElementById('bodyHook').value = '';
+    document.getElementById('length').focus();
+
     templateCount++;
   }
 
-  function getReportHTML(name){
+  function getReportHTML(reporterName) {
+    const tableHTML = document.getElementById("resultsTable").outerHTML;
+    const warningsHTML = document.getElementById("warnings").outerHTML;
     return `
     <html lang="fa" dir="rtl">
-    <head><meta charset="UTF-8"><title>گزارش قالب</title></head>
-    <body style="font-family:Tahoma;direction:rtl;padding:20px">
-      <h3>گزارش محاسبات قالب</h3>
-      <p><b>تاریخ:</b> ${new Date().toLocaleDateString("fa-IR")}</p>
-      ${document.getElementById("resultsTable").outerHTML}
-      ${document.getElementById("warnings").outerHTML}
-      <p><b>گزارشگر:</b> ${name}</p>
-    </body></html>`;
+      <head>
+        <meta charset="UTF-8">
+        <title>گزارش محاسبات قالب</title>
+        <style>
+          body { font-family: Tahoma, sans-serif; direction: rtl; padding: 20px; }
+          table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+          th, td { border: 1px solid #000; padding: 6px; text-align: center; }
+          h3 { text-align: center; }
+          .footer { margin-top: 20px; font-size: 14px; text-align: left; }
+        </style>
+      </head>
+      <body>
+        <h3>گزارش محاسبات قالب</h3>
+        <p><strong>تاریخ:</strong> ${new Date().toLocaleDateString("fa-IR")}</p>
+        ${tableHTML}
+        ${warningsHTML}
+        <div class="footer"><strong>گزارشگر:</strong> ${reporterName}</div>
+      </body>
+    </html>`;
   }
 
-  function printReport(){
-    let n = prompt("نام گزارشگر:", "مهندس خانی") || "مهندس خانی";
-    const w = window.open("", "_blank");
-    w.document.write(getReportHTML(n));
-    w.document.close();
-    w.print();
+  function printReport() {
+    let reporterName = prompt("نام گزارشگر را وارد کنید:", "مهندس خانی");
+    if (!reporterName) reporterName = "مهندس خانی";
+
+    const content = getReportHTML(reporterName);
+    const newWin = window.open("", "_blank");
+    newWin.document.write(content);
+    newWin.document.close();
+    newWin.print();
   }
 
-  function saveAsHTML(){
-    let n = prompt("نام گزارشگر:", "مهندس خانی") || "مهندس خانی";
-    const blob = new Blob([getReportHTML(n)], {type: "text/html"});
+  function saveAsHTML() {
+    let reporterName = prompt("نام گزارشگر را وارد کنید:", "مهندس خانی");
+    if (!reporterName) reporterName = "مهندس خانی";
+
+    const content = getReportHTML(reporterName);
+    const blob = new Blob([content], { type: "text/html" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url; a.download = `گزارش_${new Date().toLocaleDateString("fa-IR")}.html`; a.click();
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `گزارش_${new Date().toLocaleDateString("fa-IR")}.html`;
+    link.click();
+
     URL.revokeObjectURL(url);
   }
-
-  function loadHTMLFile(event){
-    const file = event.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e){
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(e.target.result, "text/html");
-      const table = doc.querySelector("#resultsTable");
-      const warns = doc.querySelector("#warnings");
-      if(table && warns){
-        document.getElementById("resultsTable").outerHTML = table.outerHTML;
-        document.getElementById("warnings").outerHTML = warns.outerHTML;
-        templateCount = document.querySelectorAll("#headerRow th").length;
-      } else {
-        alert("فایل معتبر نیست");
-      }
-    };
-    reader.readAsText(file);
-  }
 </script>
-
 </body>
 </html>
