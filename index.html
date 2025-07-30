@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -11,120 +10,30 @@
       margin: 0; padding: 20px;
       color: #333;
     }
-    header {
-      background-color: #0077b6;
-      color: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .info-text {
-      font-size: 14px;
-      color: #444;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .input-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-      margin-bottom: 25px;
-    }
-    .input-row label {
-      font-size: 13px;
-      display: flex;
-      flex-direction: column;
-      width: 160px;
-      background: #fff;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-    .input-row input {
-      margin-top: 6px;
-      padding: 6px 8px;
-      font-size: 14px;
-      border: 1px solid #bbb;
-      border-radius: 4px;
-    }
-    .input-row button {
-      align-self: flex-end;
-      background-color: #0077b6;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: 0.2s;
-      margin-top: 24px;
-    }
-    .input-row button:hover {
-      background-color: #005f99;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      background: #fff;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-      font-size: 14px;
-    }
-    th {
-      background-color: #f0f4f8;
-      font-weight: bold;
-    }
-    tbody tr:hover {
-      background-color: #f1f9ff;
-    }
-    #warnings {
-      margin-top: 20px;
-    }
-    #warnings ul {
-      list-style: none;
-      padding: 0;
-    }
-    #warnings li {
-      background: #fff3f3;
-      border: 1px solid #ffcccc;
-      padding: 8px 12px;
-      margin-bottom: 6px;
-      border-radius: 5px;
-      color: #c00;
-      font-size: 14px;
-    }
-    .footer-buttons {
-      position: fixed;
-      left: 20px;
-      bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .footer-buttons button {
-      width: 130px;
-      background-color: #0077b6;
-      border: none;
-      color: #fff;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: 0.2s;
-    }
-    .footer-buttons button:hover {
-      background-color: #005f99;
-    }
+    header { background-color: #0077b6; color: #fff; padding: 2px; border-radius: 8px; text-align: center; margin-bottom: 10px; }
+    .info-text { font-size: 12px; text-align: center; margin-bottom: 10px; }
+    .input-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 25px; }
+    .input-row label { font-size: 12px; display: flex; flex-direction: column; width: 160px; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+    .input-row input { margin-top: 6px; padding: 6px 8px; font-size: 14px; border: 1px solid #bbb; border-radius: 4px; }
+    .input-row button { align-self: flex-end; background-color: #0077b6; border: none; color: white; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: 0.2s; margin-top: 24px; }
+    .input-row button:hover { background-color: #005f99; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: center; font-size: 14px; }
+    th { background-color: #f0f4f8; font-weight: bold; }
+    tbody tr:hover { background-color: #f1f9ff; }
+    #warnings { margin-top: 20px; }
+    #warnings ul { list-style: none; padding: 0; }
+    #warnings li { background: #fff3f3; border: 1px solid #ffcccc; padding: 8px 12px; margin-bottom: 6px; border-radius: 5px; color: #c00; font-size: 14px; }
+    .footer-buttons { position: fixed; left: 25px; bottom: 25px; display: flex; flex-direction: column; gap: 5px; }
+    .footer-buttons button { width: 130px; background-color: #0077b6; border: none; color: #fff; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: 0.2s; }
+    .footer-buttons button:hover { background-color: #000f99; }
+
+    .help-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+    .help-box { background: #fff; width: 340px; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); text-align: right; font-family: Tahoma; animation: popIn 0.3s ease; }
+    .help-box h3 { text-align: center; margin-bottom: 10px; color: #0077b6; }
+    .help-box ul { padding-right: 20px; font-size: 14px; line-height: 1.7; }
+    .help-box button { background: #0077b6; color: white; padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer; display: block; margin: 10px auto 0; }
+    @keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
   </style>
 </head>
 <body>
@@ -179,18 +88,25 @@
 <div class="footer-buttons">
   <button onclick="printReport()">🖨️ پرینت</button>
   <button onclick="saveAsHTML()">💾 ذخیره HTML</button>
+  <button onclick="showHelp()">ℹ️ راهنما</button>
 </div>
 
 <script>
   let templateCount = 1;
 
-  function toMM(val) {
-    return val * 0.0254;
-  }
+  function toMM(val) { return val * 0.0254; }
+  function formatDualUnit(val) { return `${val.toFixed(2)} (${toMM(val).toFixed(2)} mm)`; }
 
-  function formatDualUnit(val) {
-    return `${val.toFixed(2)} (${toMM(val).toFixed(2)} mm)`;
-  }
+  // ➤ با Enter رفتن به فیلد بعدی
+  document.querySelectorAll(".input-row input").forEach((input, index, all) => {
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (index < all.length - 1) all[index + 1].focus();
+        else document.querySelector(".input-row button").focus();
+      }
+    });
+  });
 
   function addTemplate() {
     const ids = ['length','seamThickness','coverHook','bodyHook','headThickness','bodyThickness'];
@@ -206,9 +122,7 @@
     const freeSpace = Math.abs(seamThickness - (3 * headThickness + 2 * bodyThickness));
     const denom = length - (2.2 * headThickness + 1.1 * bodyThickness);
     let overlap = 0;
-    if (denom !== 0) {
-      overlap = Math.abs((length - (coverHook + bodyHook + 1.1 * headThickness)) / denom * 100);
-    }
+    if (denom !== 0) overlap = Math.abs((length - (coverHook + bodyHook + 1.1 * headThickness)) / denom * 100);
 
     if (templateCount > 1) {
       const th = document.createElement('th');
@@ -217,16 +131,11 @@
     }
 
     const values = [
-      formatDualUnit(length),
-      formatDualUnit(seamThickness),
-      formatDualUnit(coverHook),
-      formatDualUnit(bodyHook),
-      formatDualUnit(headThickness),
-      formatDualUnit(bodyThickness),
-      formatDualUnit(hookDiff),
-      formatDualUnit(freeSpace),
-      overlap.toFixed(2),
-      '-','-'
+      formatDualUnit(length), formatDualUnit(seamThickness),
+      formatDualUnit(coverHook), formatDualUnit(bodyHook),
+      formatDualUnit(headThickness), formatDualUnit(bodyThickness),
+      formatDualUnit(hookDiff), formatDualUnit(freeSpace),
+      overlap.toFixed(2), '-','-'
     ];
 
     const rows = document.querySelectorAll('#tableBody tr');
@@ -240,22 +149,14 @@
     const col = templateCount;
     const warnings = [];
 
-    if (coverHook < 70) {
-      rows[2].children[col].style.color = 'red';
-      warnings.push('قلاب درب کمتر از 70');
-    }
-    if (bodyHook < 70) {
-      rows[3].children[col].style.color = 'red';
-      warnings.push('قلاب بدنه کمتر از 70');
-    }
-    if (hookDiff > 7.8) {
-      rows[6].children[col].style.color = 'red';
-      warnings.push('اختلاف قلاب بیشتر از 7.8');
-    }
-    if (freeSpace > 7.5) {
-      rows[7].children[col].style.color = 'red';
-      warnings.push('فضای آزاد بیشتر از 7.5');
-    }
+    if (coverHook < 70) { rows[2].children[col].style.color = 'red'; warnings.push('قلاب درب کمتر از 70'); }
+    if (bodyHook < 70) { rows[3].children[col].style.color = 'red'; warnings.push('قلاب بدنه کمتر از 70'); }
+    if (hookDiff > 7.8) { rows[6].children[col].style.color = 'red'; warnings.push('اختلاف قلاب بیشتر از 7.8'); }
+    if (freeSpace > 7.5) { rows[7].children[col].style.color = 'red'; warnings.push('فضای آزاد بیشتر از 7.5'); }
+
+    // ✅ هشدار جدید برای درصد درگیری
+    if (overlap < 45) { rows[8].children[col].style.color = 'red'; warnings.push('درصد درگیری کمتر از 45٪ است'); }
+    if (overlap > 90) { rows[8].children[col].style.color = 'red'; warnings.push('درصد درگیری بیشتر از 90٪ است'); }
 
     if (warnings.length) {
       const li = document.createElement('li');
@@ -263,7 +164,7 @@
       document.getElementById('warningList').appendChild(li);
     }
 
-    // پاک‌سازی فرم
+    // بعد از محاسبه، ضخامت ورق‌ها پاک نشود
     document.getElementById('length').value = '';
     document.getElementById('seamThickness').value = '';
     document.getElementById('coverHook').value = '';
@@ -274,51 +175,65 @@
   }
 
   function getReportHTML(name) {
-    const tableHTML = document.getElementById("resultsTable").outerHTML;
-    const warnHTML = document.getElementById("warnings").outerHTML;
-    return `
-      <html lang="fa" dir="rtl">
-      <head>
-        <meta charset="UTF-8">
-        <title>گزارش محاسبات قالب</title>
-        <style>
-          body { font-family: Tahoma, sans-serif; direction: rtl; padding: 20px; }
-          table { border-collapse: collapse; width: 100%; margin-top: 10px; }
-          th, td { border: 1px solid #000; padding: 6px; text-align: center; }
-          h3 { text-align: center; }
-          .footer { margin-top: 20px; font-size: 14px; }
-        </style>
-      </head>
-      <body>
-        <h3>گزارش محاسبات قالب</h3>
-        <p><strong>تاریخ:</strong> ${new Date().toLocaleDateString("fa-IR")}</p>
-        ${tableHTML}
-        ${warnHTML}
-        <div class="footer"><strong>گزارشگر:</strong> ${name}</div>
-      </body>
-      </html>`;
-  }
+  return `
+    <html lang="fa" dir="rtl"><head><meta charset="UTF-8">
+    <title>گزارش محاسبات آنالیز</title>
+    <style>
+      body{font-family:Tahoma;direction:rtl;padding:20px;}
+      table{border-collapse:collapse;width:100%;margin-top:10px;}
+      th,td{border:1px solid #000;padding:6px;text-align:center;}
+      h3{text-align:center;}
+      .footer{margin-top:20px;text-align:center;font-size:12px;color:#444;}
+    </style>
+    </head><body>
+      <h3>گزارش محاسبات آنالیز</h3>
+      <p><strong>تاریخ:</strong> ${new Date().toLocaleDateString("fa-IR")}</p>
+      ${document.getElementById("resultsTable").outerHTML}
+      ${document.getElementById("warnings").outerHTML}
+      <div><strong>گزارشگر:</strong> ${name}</div>
+      <div class="footer">
+        © 2025 - تهیه‌کننده: مصیب خانی | کنترل کیفیت کارخانه یک ویک دشت مرغاب
+      </div>
+    </body></html>`;
+}
 
   function printReport() {
-    let name = prompt("نام گزارشگر را وارد کنید:", "مهندس خانی");
-    if (!name) name = "مهندس خانی";
-    const w = window.open("");
-    w.document.write(getReportHTML(name));
-    w.document.close();
-    w.print();
+    let name = prompt("نام گزارشگر را وارد کنید:", "مهندس خانی") || "مهندس خانی";
+    const w = window.open(""); w.document.write(getReportHTML(name)); w.document.close(); w.print();
   }
 
   function saveAsHTML() {
-    let name = prompt("نام گزارشگر را وارد کنید:", "مهندس خانی");
-    if (!name) name = "مهندس خانی";
+    let name = prompt("نام گزارشگر را وارد کنید:", "مهندس خانی") || "مهندس خانی";
     const blob = new Blob([getReportHTML(name)], { type: "text/html" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `گزارش_${new Date().toLocaleDateString("fa-IR")}.html`;
-    a.click();
+    const a = document.createElement("a"); a.href = url; a.download = `گزارش_${new Date().toLocaleDateString("fa-IR")}.html`; a.click();
     URL.revokeObjectURL(url);
   }
+
+  function showHelp() {
+  const overlay = document.createElement("div");
+  overlay.className = "help-overlay";
+  const box = document.createElement("div");
+  box.className = "help-box";
+  box.innerHTML = `
+    <h3>📘 راهنمای استفاده</h3>
+    <ul>
+      <li>1️⃣ مقادیر را بر حسب <b>0.001 اینچ</b> وارد کنید.</li>
+      <li>2️⃣ روی دکمه <b>محاسبه/جدید</b> کلیک کنید.</li>
+      <li>3️⃣ نتایج در جدول اضافه می‌شود و می‌توانید چاپ یا ذخیره کنید.</li>
+      <li>4️⃣ برای پاک کردن اطلاعات، کلید <b>F5</b> را فشار دهید.</li>
+      <li>5️⃣ اگر پیشنهادی برای بهبود برنامه دارید، لطفاً نظرتان را با ما در میان بگذارید ✅</li>
+    </ul>
+    <p style="font-size:13px; text-align:center; margin-top:5px;">
+      ✍️ تهیه‌کننده: <b>مصیب خانی</b><br>
+      📞 09173206052<br>
+      🛠️ نسخه 1.01
+    </p>
+    <button onclick="document.body.removeChild(this.parentNode.parentNode)">بستن</button>`;
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+}
+
 </script>
 
 </body>
