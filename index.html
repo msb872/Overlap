@@ -1,5 +1,5 @@
-
 <!DOCTYPE html>
+<!-- 📝 نسخه کامل HTML و JavaScript اصلاح‌شده -->
 <html lang="fa">
 <head>
   <meta charset="UTF-8" />
@@ -8,9 +8,8 @@
     body { font-family: Tahoma, sans-serif; direction: rtl; background-color: #f7f9fc; margin: 20px; color: #333; }
     h2 { margin-bottom: 10px; }
     .info-text { font-size: 13px; color: #555; margin-bottom: 10px; }
-    .input-row, .unit-toggle { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; align-items: center; }
-    .input-row label, .unit-toggle label { font-size: 13px; display: flex; flex-direction: column; width: 140px; }
-    .unit-toggle input { margin-left: 6px; }
+    .input-row { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; align-items: center; }
+    .input-row label { font-size: 13px; display: flex; flex-direction: column; width: 140px; }
     .input-row input {
       padding: 6px 8px; font-size: 14px; border: 1px solid #bbb; border-radius: 4px;
       width: 100%; box-sizing: border-box;
@@ -52,171 +51,187 @@
 <body>
 
   <div style="text-align: center;">
-  <h2>برنامه محاسبه درصد درگیری قوطی فلزی-  تهیه کننده: مصیب خانی کارشناس کنترل کیفیت کارخانه دشت مرغاب</h2>
-  <p class="info-text">🔹 تمام مقادیر ورودی بر حسب <strong>0.001 اینچ</strong> هستند، مگر اینکه گزینه "میلیمتر" فعال شود 🔹</p>
+    <h2>برنامه محاسبه درصد درگیری قوطی فلزی - تهیه‌کننده: مصیب خانی</h2>
+    <p class="info-text">🔹 تمام مقادیر بر حسب <strong>0.001 اینچ</strong> هستند و مقدار تبدیل‌شده به میلی‌متر نیز همراه نمایش داده می‌شود 🔹</p>
   </div>
 
-<div class="unit-toggle">
-  <label>
-    <input type="checkbox" id="convertToMM" />
-    تغییر از اینچ به میلیمتر (ضریب 0.0254)
-  </label>
-</div>
+  <div class="input-row">
+    <label>طول دوخت-SL<input type="number" id="length" min="0" step="0.01"/></label>
+    <label>ضخامت دوخت-ST<input type="number" id="seamThickness" min="0" step="0.01"/></label>
+    <label>قلاب درب-CH<input type="number" id="coverHook" min="0" step="0.01"/></label>
+    <label>قلاب بدنه-BH<input type="number" id="bodyHook" min="0" step="0.01"/></label>
+    <label>ضخامت ورق سر-Te<input type="number" id="headThickness" min="0" step="0.01"/></label>
+    <label>ضخامت ورق بدنه-Tb<input type="number" id="bodyThickness" min="0" step="0.01"/></label>
+    <button onclick="addTemplate()">➕ محاسبه </button>
+  </div>
 
-<div class="input-row">
-  <label>طول دوخت-SL<input type="number" id="length" min="0" step="0.01"/></label>
-  <label>ضخامت دوخت-ST<input type="number" id="seamThickness" min="0" step="0.01"/></label>
-  <label>قلاب درب-CH<input type="number" id="coverHook" min="0" step="0.01"/></label>
-  <label>قلاب بدنه-BH<input type="number" id="bodyHook" min="0" step="0.01"/></label>
-  <label>ضخامت ورق سر-Te<input type="number" id="headThickness" min="0" step="0.01"/></label>
-  <label>ضخامت ورق بدنه-Tb<input type="number" id="bodyThickness" min="0" step="0.01"/></label>
-  <button onclick="addTemplate()">➕ محاسبه </button>
-</div>
+  <div class="table-container">
+    <table id="resultsTable">
+      <thead>
+        <tr id="headerRow">
+          <th>ویژگی‌ها</th>
+          <th>قالب 1</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr><td>طول دوخت (Seam Length)</td></tr>
+        <tr><td>ضخامت دوخت (Seam Thickness)</td></tr>
+        <tr><td>قلاب درب (Cover Hook)</td></tr>
+        <tr><td>قلاب بدنه (Body Hook)</td></tr>
+        <tr><td>ضخامت ورق سر (End Thickness)</td></tr>
+        <tr><td>ضخامت ورق بدنه (Body Thickness)</td></tr>
+        <tr><td>اختلاف قلاب (Hook Difference)</td></tr>
+        <tr><td>فضای آزاد (Free Space)</td></tr>
+        <tr><td>درصد درگیری (Overlap %)</td></tr>
+        <tr><td>چروکیدگی قلاب درب (Cover Hook Wrinkle)</td></tr>
+        <tr><td>تیزکردگی دوخت (Seam Sharpness)</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-<div class="table-container">
-  <table id="resultsTable">
-    <thead>
-      <tr id="headerRow">
-        <th>ویژگی‌ها</th>
-        <th>قالب 1</th>
-      </tr>
-    </thead>
-    <tbody id="tableBody">
-      <tr><td>طول دوخت (Seam Length)</td></tr>
-      <tr><td>ضخامت دوخت (Seam Thickness)</td></tr>
-      <tr><td>قلاب درب (Cover Hook)</td></tr>
-      <tr><td>قلاب بدنه (Body Hook)</td></tr>
-      <tr><td>ضخامت ورق سر (End Thickness)</td></tr>
-      <tr><td>ضخامت ورق بدنه (Body Thickness)</td></tr>
-      <tr><td>اختلاف قلاب (Hook Difference)</td></tr>
-      <tr><td>فضای آزاد (Free Space)</td></tr>
-      <tr><td>درصد درگیری (Overlap %)</td></tr>
-      <tr><td>چروکیدگی قلاب درب (Cover Hook Wrinkle)</td></tr>
-      <tr><td>تیزکردگی دوخت (Seam Sharpness)</td></tr>
-    </tbody>
-  </table>
-</div>
+  <div id="warnings"><strong>⚠️ موارد نیازمند اصلاح:</strong><ul id="warningList"></ul></div>
 
-<div id="warnings"><strong>⚠️ موارد نیازمند اصلاح:</strong><ul id="warningList"></ul></div>
-
-<button id="printBtn" onclick="printReport()">🖨️ پرینت</button>
-<button id="saveBtn" onclick="saveAsHTML()">💾 ذخیره HTML</button>
+  <button id="printBtn" onclick="printReport()">🖨️ پرینت</button>
+  <button id="saveBtn" onclick="saveAsHTML()">💾 ذخیره HTML</button>
 
 <script>
-  let templateCount = 1;
+let templateCount = 1;
 
-  function convertToMillimeter(value) {
-    return document.getElementById('convertToMM').checked ? value * 0.0254 : value;
+function toMM(val) {
+  return val * 0.0254;
+}
+
+function formatBothUnits(value) {
+  return `${value.toFixed(1)}  - ${toMM(value).toFixed(2)}mm`;
+}
+
+
+function addTemplate() {
+  const ids = ['length','seamThickness','coverHook','bodyHook','headThickness','bodyThickness'];
+  const rawValues = ids.map(id => parseFloat(document.getElementById(id).value));
+
+  if (rawValues.some(v => isNaN(v) || v < 0)) {
+    alert('لطفاً همه فیلدها را با مقادیر عددی مثبت پر کنید.');
+    return;
   }
 
-  function isMillimeterMode() {
-    return document.getElementById('convertToMM').checked;
+  const [length, seamThickness, coverHook, bodyHook, headThickness, bodyThickness] = rawValues;
+
+  const hookDiff = Math.abs(coverHook - bodyHook);
+  const freeSpace = Math.abs(seamThickness - (3 * headThickness + 2 * bodyThickness));
+  const denominator = length - (2.2 * headThickness + 1.1 * bodyThickness);
+
+  let overlap = 0;
+  if (denominator !== 0) {
+    overlap = Math.abs((length - (coverHook + bodyHook + 1.1 * headThickness)) / denominator * 100);
   }
 
-  function addTemplate() {
-    const ids = ['length','seamThickness','coverHook','bodyHook','headThickness','bodyThickness'];
-    const rawValues = ids.map(id => parseFloat(document.getElementById(id).value));
-    
-    if (rawValues.some(v => isNaN(v) || v < 0)) {
-      alert('لطفاً همه فیلدها را با مقادیر عددی مثبت پر کنید.');
-      return;
-    }
-
-    const [length, seamThickness, coverHook, bodyHook, headThickness, bodyThickness] = rawValues.map(convertToMillimeter);
-
-    const hookDiff = Math.abs(coverHook - bodyHook);
-    const freeSpace = Math.abs(seamThickness - (3 * headThickness + 2 * bodyThickness));
-    const denominator = length - (2.2 * headThickness + 1.1 * bodyThickness);
-    let overlap = 0;
-    if (denominator !== 0) {
-      overlap = Math.abs((length - (coverHook + bodyHook + 1.1 * headThickness)) / denominator * 100);
-    }
-
-    if (templateCount > 1) {
-      const newHeader = document.createElement('th');
-      newHeader.textContent = `قالب ${templateCount}`;
-      document.getElementById('headerRow').appendChild(newHeader);
-    }
-
-    const values = [
-      length.toFixed(2), seamThickness.toFixed(2), coverHook.toFixed(2),
-      bodyHook.toFixed(2), headThickness.toFixed(2), bodyThickness.toFixed(2),
-      hookDiff.toFixed(2), freeSpace.toFixed(2), overlap.toFixed(2), '-', '-'
-    ];
-
-    const rows = document.querySelectorAll('#tableBody tr');
-    rows.forEach((row, i) => {
-      const td = document.createElement('td');
-            td.textContent = values[i];
-      td.style.color = '';
-      row.appendChild(td);
-    });
-
-    const col = templateCount;
-    let warningsForCurrentTemplate = [];
-
-    // هشدارها بر اساس واحد انتخابی
-    if (isMillimeterMode()) {
-      if (coverHook < 1.78) {
-        rows[2].children[col].style.color = 'red';
-        warningsForCurrentTemplate.push('قلاب درب کمتر از 1.78 میلی‌متر است');
-      }
-      if (bodyHook < 1.78) {
-        rows[3].children[col].style.color = 'red';
-        warningsForCurrentTemplate.push('قلاب بدنه کمتر از 1.78 میلی‌متر است');
-      }
-      if (hookDiff > 0.2) {
-        rows[6].children[col].style.color = 'red';
-        warningsForCurrentTemplate.push('اختلاف قلاب بیشتر از 0.2 میلی‌متر است');
-      }
-      if (freeSpace > 0.19) {
-        rows[7].children[col].style.color = 'red';
-        warningsForCurrentTemplate.push('فضای آزاد بیشتر از 0.19 میلی‌متر است');
-      }
-    } else {
-      if (coverHook < 70) {
-        rows[2].children[col].style.color = 'red';
-        warningsForCurrentTemplate.push('قلاب درب کمتر از 70 است');
-      }
-      if (bodyHook < 70) {
-        rows[3].children[col].style.color = 'red';
-        warningsForCurrentTemplate.push('قلاب بدنه کمتر از 70 است');
-      }
-      if (hookDiff > 7.8) {
-        rows[6].children[col].style.color = 'red';
-        warningsForCurrentTemplate.push('اختلاف قلاب بیشتر از 7.8 است');
-      }
-      if (freeSpace > 7.5) {
-        rows[7].children[col].style.color = 'red';
-        warningsForCurrentTemplate.push('فضای آزاد بیشتر از 7.5 است');
-      }
-    }
-
-    if (warningsForCurrentTemplate.length > 0) {
-      const warningList = document.getElementById('warningList');
-      const li = document.createElement('li');
-      li.textContent = `قالب ${col}: ${warningsForCurrentTemplate.join('، ')}`;
-      warningList.appendChild(li);
-    }
-
-    // پاک‌سازی و آماده‌سازی فرم
-document.getElementById('length').value = '';
-document.getElementById('seamThickness').value = '';
-document.getElementById('coverHook').value = '';
-document.getElementById('bodyHook').value = '';
-// حذف پاک‌سازی ضخامت‌ها:
-// document.getElementById('headThickness').value = '';
-// document.getElementById('bodyThickness').value = '';
-document.getElementById('length').focus();
-
-
-    templateCount++;
+  if (templateCount > 1) {
+    const newHeader = document.createElement('th');
+    newHeader.textContent = `قالب ${templateCount}`;
+    document.getElementById('headerRow').appendChild(newHeader);
   }
 
-  function getReportHTML(reporterName) {
-    const tableHTML = document.getElementById("resultsTable").outerHTML;
-    const warningsHTML = document.getElementById("warnings").outerHTML;
-    return `
+  const values = [
+    formatBothUnits(length),
+    formatBothUnits(seamThickness),
+    formatBothUnits(coverHook),
+    formatBothUnits(bodyHook),
+    formatBothUnits(headThickness),
+    formatBothUnits(bodyThickness),
+    formatBothUnits(hookDiff),
+    formatBothUnits(freeSpace),
+    `${overlap.toFixed(2)}%`,
+    '-', '-'
+  ];
+
+  const rows = document.querySelectorAll('#tableBody tr');
+  rows.forEach((row, i) => {
+    const td = document.createElement('td');
+    td.textContent = values[i];
+    td.style.color = '';
+    row.appendChild(td);
+  });
+
+  const col = templateCount;
+  let warnings = [];
+
+  if (coverHook < 0.070) {
+    rows[2].children[col].style.color = 'red';
+    warnings.push(`قلاب درب کمتر از ۷۰ هزارم اینچ است`);
+  }
+  if (bodyHook < 0.070) {
+    rows[3].children[col].style.color = 'red';
+    warnings.push(`قلاب بدنه کمتر از ۷۰ هزارم اینچ است`);
+  }
+  if (hookDiff > 0.0078) {
+    rows[6].children[col].style.color = 'red';
+    warnings.push(`اختلاف قلاب بیشتر از ۷.۸ هزارم اینچ است`);
+  }
+  if (freeSpace > 0.0075) {
+    rows[7].children[col].style.color = 'red';
+    warnings.push(`فضای آزاد بیشتر از ۷.۵ هزارم اینچ است`);
+  }
+  if (overlap < 45) {
+    rows[8].children[col].style.color = 'red';
+    warnings.push(`درصد درگیری کمتر از ۴۵٪ است`);
+  }
+
+  if (warnings.length > 0) {
+    const warningList = document.getElementById('warningList');
+    const li = document.createElement('li');
+    li.textContent = `قالب ${col}: ${warnings.join('، ')}`;
+    warningList.appendChild(li);
+  }
+
+
+
+  document.getElementById('length').value = '';
+  document.getElementById('seamThickness').value = '';
+  document.getElementById('coverHook').value = '';
+  document.getElementById('bodyHook').value = '';
+  document.getElementById('length').focus();
+
+  templateCount++;
+}
+
+// چاپ گزارش
+function printReport() {
+  let reporterName = prompt("نام گزارشگر را وارد کنید:", "مهندس خانی");
+  if (!reporterName) reporterName = "مهندس خانی";
+
+  const content = getReportHTML(reporterName);
+  const newWin = window.open("", "_blank");
+  newWin.document.write(content);
+  newWin.document.close();
+  newWin.print();
+}
+
+// ذخیره گزارش HTML
+function saveAsHTML() {
+  let reporterName = prompt("نام گزارشگر را وارد کنید:", "مهندس خانی");
+  if (!reporterName) reporterName = "مهندس خانی";
+
+  const content = getReportHTML(reporterName);
+  const blob = new Blob([content], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+
+  const date = new Date().toLocaleDateString("fa-IR").replaceAll('/', '-');
+  const fileName = `آنالیز_دوخت_${date}.html`;
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+
+// تولید HTML گزارش برای ذخیره یا چاپ
+function getReportHTML(reporterName) {
+  const tableHTML = document.getElementById("resultsTable").outerHTML;
+  const warningsHTML = document.getElementById("warnings").outerHTML;
+  return `
     <html lang="fa" dir="rtl">
       <head>
         <meta charset="UTF-8">
@@ -237,34 +252,8 @@ document.getElementById('length').focus();
         <div class="footer"><strong>گزارشگر:</strong> ${reporterName}</div>
       </body>
     </html>`;
-  }
-
-  function printReport() {
-    let reporterName = prompt("نام گزارشگر را وارد کنید:", "مهندس خانی");
-    if (!reporterName) reporterName = "مهندس خانی";
-
-    const content = getReportHTML(reporterName);
-    const newWin = window.open("", "_blank");
-    newWin.document.write(content);
-    newWin.document.close();
-    newWin.print();
-  }
-
-  function saveAsHTML() {
-    let reporterName = prompt("نام گزارشگر را وارد کنید:", "مهندس خانی");
-    if (!reporterName) reporterName = "مهندس خانی";
-
-    const content = getReportHTML(reporterName);
-    const blob = new Blob([content], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `گزارش_${new Date().toLocaleDateString("fa-IR")}.html`;
-    link.click();
-
-    URL.revokeObjectURL(url);
-  }
+}
 </script>
 </body>
 </html>
+
