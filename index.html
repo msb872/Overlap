@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>درصد درگیری دربندی قوطی فلزی </title>
+  <title>درصد درگیری دربندی قوطی فلزی - نسخه کامل</title>
   <style>
     body { font-family: Tahoma, sans-serif; background:#eef2f7; direction:rtl; margin:0; padding:6px; color:#333; }
     header { background:#0077b6; color:#fff; padding:8px; border-radius:6px; text-align:center; margin-bottom:10px; }
@@ -20,17 +20,23 @@
     th{ background:#f0f4f8; }
     #warnings{ margin:10px 16px; font-family:Tahoma, sans-serif; }
     #warnings strong{ display:block; margin-bottom:4px; }
-    #warnings div.warningItem{ background:#ffd2d2; padding:6px 10px; margin:4px 0; border-radius:6px; font-size:14px; line-height:1.3; text-align:justify; }
+    #warnings .warningItem{
+      background:#ffe6e6; padding:6px 10px; margin:4px 0; border-radius:6px;
+      font-size:14px; line-height:1.3; text-align:justify; border:1px solid #ffb3b3;
+    }
+    #warnings .infoItem{
+      background:#e6f4ff; padding:6px 10px; margin:4px 0; border-radius:6px;
+      font-size:14px; line-height:1.3; text-align:justify; border:1px solid #b3daff;
+    }
     #correctionMessage{ margin-top:10px; border-top:1px solid #999; padding-top:6px; font-size:14px; color:#0077b6; font-family:Tahoma, sans-serif; word-break:break-word; }
     #helpOverlay{ position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:1000; }
-    #helpBox{ background:#fff; max-width:600px; width:90%; padding:20px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,.3); text-align:right; line-height:1.6; position:relative; font-family:Tahoma, sans-serif; font-size:14px; color:#333; }
-    #helpBox h4{ margin-top:0; color:#0077b6; text-align:center; }
-    #helpBox h5{ color:#0077b6; margin-bottom:6px; margin-top:12px; }
-    #helpCloseBtn{ position:absolute; top:8px; left:8px; padding:4px 8px; cursor:pointer; background:#0077b6; color:#fff; border:none; border-radius:4px; font-size:13px; }
+    #helpBox{ background:#fff; max-width:600px; width:90%; padding:20px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,.3); text-align:right; line-height:1.6; position:relative; font-family:Tahoma, sans-serif; font-size:14px; color:#333; }
+    #helpCloseBtn{ position:absolute; top:8px; left:8px; padding:6px 12px; cursor:pointer; background:#3498db; color:#fff; border:none; border-radius:6px; font-size:13px; }
     .footer-buttons{ position:fixed; bottom:10px; left:10px; display:flex; flex-direction:column; gap:8px; z-index:500; }
     .footer-buttons button{ background:#0077b6; border:none; color:#fff; padding:8px 12px; border-radius:6px; cursor:pointer; font-size:14px; width:140px; text-align:center; }
     .footer-buttons button:hover{ background:#005f99; }
     #pageFooter{ position:fixed; bottom:0; width:100%; background:#f1f1f1; text-align:center; padding:8px 0; font-size:14px; border-top:1px solid #ccc; font-family:Tahoma, sans-serif; }
+
     @media print{
       body *{ visibility:hidden; }
       #printArea, #printArea *, #warnings, #warnings *, #correctionMessage, #pageFooter, #printHeader, #printFooter{ visibility:visible !important; }
@@ -45,8 +51,8 @@
 <body>
 
 <header>
-  <h2>برنامه محاسبه درصد درگیری قوطی فلزی v1.12</h2>
-  <p>  تهیه‌کننده: مصیب خانی - کارشناس کنترل کیفیت کارخانه یک ویک دشت مرغاب</p>
+  <h2>برنامه محاسبه درصد درگیری قوطی فلزی v1.14</h2>
+  <p>تهیه‌کننده: مصیب خانی - کارشناس کنترل کیفیت</p>
 </header>
 
 <p class="info-text" id="infoText">🔹 تمام مقادیر بر حسب <strong>0.001 اینچ</strong> هستند 🔹</p>
@@ -78,8 +84,8 @@
 </div>
 
 <div class="input-row">
-  <label>طول دوخت-SL<input type="number" id="length" min="0" step="0.01" autocomplete="off"></label>
-  <label>ضخامت دوخت-ST<input type="number" id="seamThickness" min="0" step="0.01" autocomplete="off"></label>
+  <label>طول-SL<input type="number" id="length" min="0" step="0.01" autocomplete="off"></label>
+  <label>ضخامت-ST<input type="number" id="seamThickness" min="0" step="0.01" autocomplete="off"></label>
   <label>قلاب درب-CH<input type="number" id="coverHook" min="0" step="0.01" autocomplete="off"></label>
   <label>قلاب بدنه-BH<input type="number" id="bodyHook" min="0" step="0.01" autocomplete="off"></label>
   <label>ضخامت سر-Te<input type="number" id="headThickness" min="0" step="0.01" autocomplete="off"></label>
@@ -101,13 +107,13 @@
       <tr id="headerRow"><th>ویژگی‌ها</th></tr>
     </thead>
     <tbody id="tableBody">
-      <tr><td>طول دوخت (SL)</td></tr>
-      <tr><td>ضخامت دوخت (ST)</td></tr>
+      <tr><td>طول (SL)</td></tr>
+      <tr><td>ضخامت (ST)</td></tr>
       <tr><td>قلاب درب (CH)</td></tr>
       <tr><td>قلاب بدنه (BH)</td></tr>
       <tr><td>ضخامت سر (Te)</td></tr>
       <tr><td>ضخامت بدنه (Tb)</td></tr>
-      <tr><td>اختلاف قلاب (ΔH)</td></tr>
+      <tr><td>اختلاف (ΔH)</td></tr>
       <tr><td>فضای آزاد (FS)</td></tr>
       <tr><td>درصد درگیری (OL%)</td></tr>
       <tr><td>چروکیدگی (Wr)</td></tr>
@@ -117,7 +123,7 @@
 </div>
 
 <div id="warnings">
-  <strong>⚠️ موارد نیازمند اصلاح:</strong>
+  <strong>⚠️ موارد نیازمند اصلاح و پیام‌ها:</strong>
   <div id="warningList"></div>
   <div id="correctionMessage"></div>
 </div>
@@ -141,10 +147,12 @@
 let templatesData = [];
 let isEditing = false;
 let editingIndex = -1;
-let correctionHistory = [];
+// history فقط خلاصهٔ تعداد هشدارها برای نمایش بالاسری
+let correctionHistory = []; // [{title, count}]
 
 const inputsOrder = ['length','seamThickness','coverHook','bodyHook','headThickness','bodyThickness'];
 
+/* تبدیل واحد */
 function toMM(thou){ return thou * 0.0254; }
 function toThou(mm){ return mm / 0.0254; }
 
@@ -176,6 +184,7 @@ document.querySelectorAll('.input-row input,.input-row select').forEach(i => {
   });
 });
 
+/* ناوبری با Enter */
 inputsOrder.forEach((id, i) => {
   const el = document.getElementById(id);
   el.addEventListener('keydown', e => {
@@ -198,17 +207,17 @@ document.getElementById('calcBtn').addEventListener('keydown', e => {
 
 /* آستانه‌ها (thou) */
 const LIMITS_T = {
-  CH_MIN: 70,
-  BH_MIN: 70,
-  DIFF_MAX: 7.8,
-  FREE_MAX: 7.5,
-  OL_MIN: 45
+  CH_MIN: 70,     // ~1.78 mm
+  BH_MIN: 70,     // ~1.78 mm
+  DIFF_MAX: 7.8,  // ~0.20 mm
+  FREE_MAX: 7.5,  // ~0.19 mm
+  OL_MIN: 45      // %
 };
 
 function addTemplate(){
   const unit = document.getElementById('unitSelect').value;
 
-  // ورودی‌ها → thou
+  // ورودی‌ها → به thou برای محاسبه
   let raw = inputsOrder.map(id => parseFloat(document.getElementById(id).value));
   if(raw.some(v => isNaN(v) || v < 0)){
     alert('لطفاً همه مقادیر را به درستی وارد کنید');
@@ -217,13 +226,13 @@ function addTemplate(){
   if(unit === 'mm') raw = raw.map(v => toThou(v));
   const [L, ST, CH, BH, Te, Tb] = raw;
 
-  const diff = Math.abs(CH - BH);
-  const free = Math.abs(ST - (3*Te + 2*Tb));
+  const diff = Math.abs(CH - BH);                         // ΔH
+  const free = Math.abs(ST - (3*Te + 2*Tb));              // FS
   const denom = L - (2.2*Te + 1.1*Tb);
-  const overlap = denom ? Math.abs((L - (CH + BH + 1.1*Te)) / denom * 100) : 0;
+  const overlap = denom ? Math.abs((L - (CH + BH + 1.1*Te)) / denom * 100) : 0; // %
 
-  /* --- رفتار جدید اصلاحیه: همیشه ستون جدید --- */
-  const newIndex = templatesData.length;            // ایندکس داده تازه
+  /* --- رفتار اصلاحیه: همیشه ستون جدید --- */
+  const newIndex = templatesData.length;
   templatesData.push({L,ST,CH,BH,Te,Tb});
 
   const title = isEditing
@@ -237,15 +246,16 @@ function addTemplate(){
     <button class="del" style="margin-left:6px">حذف</button>`;
   document.getElementById('headerRow').appendChild(th);
 
+  // حذف ستون + پاکسازی پیام‌های مربوط به همان عنوان + به‌روزرسانی خلاصه
   th.querySelector('.del').onclick = () => {
     const colIndex = [...document.getElementById('headerRow').children].indexOf(th);
     th.remove();
     document.querySelectorAll('#tableBody tr').forEach(r => {
       if(r.children[colIndex]) r.children[colIndex].remove();
     });
-    correctionHistory = correctionHistory.filter(m => !m.startsWith(title));
+    removeWarningByTitle(title);
+    correctionHistory = correctionHistory.filter(obj => obj.title !== title);
     renderCorr();
-    clearWarningList(title);
     isEditing = false; editingIndex = -1;
     document.getElementById('calcBtn').textContent = '➕ محاسبه/جدید';
   };
@@ -256,7 +266,7 @@ function addTemplate(){
   const vals = [L, ST, CH, BH, Te, Tb, diff, free, overlap, '-', '-'];
   addValuesToTable(colIndex, vals, unit);
 
-  // هشدارها (نمایش با واحد انتخابی)
+  // تولید هشدارها (نمایش با واحد انتخابی کاربر)
   const warns = [];
   const mark = (row, msg) => {
     document.querySelectorAll('#tableBody tr')[row].children[colIndex].style.background = '#ffd2d2';
@@ -269,11 +279,22 @@ function addTemplate(){
   if (free > LIMITS_T.FREE_MAX) mark(7, `فضای آزاد بیشتر از ${formatVal(LIMITS_T.FREE_MAX, unit)}`);
   if (overlap < LIMITS_T.OL_MIN) mark(8, `درصد درگیری کمتر از ${LIMITS_T.OL_MIN}%`);
 
+  // پاک‌کردن پیام‌های قبلی همین عنوان و درج جدید (جلوگیری از تکرار)
   clearWarningList(title);
+  clearInfoByTitle(title);
+
   if(warns.length > 0){
     addWarning(`${title}: ${warns.join(' ؛ ')}`);
   }
-  correctionHistory.push(`${title}: ${warns.join(' ؛ ')}`);
+
+  // اگر ستون «اصلاحیه» است، پیام اطلاع‌رسان آبی اضافه کن
+  if (isEditing) {
+    const baseTemplate = `قالب ${editingIndex + 1}`;
+    addInfo(`${title}: جهت اصلاح ${baseTemplate} ثبت شد`);
+  }
+
+  // ذخیرهٔ خلاصه (فقط تعداد هشدارها) برای نمایش بالاسری
+  correctionHistory.push({ title, count: warns.length });
   renderCorr();
 
   // ریست فرم و حالت اصلاح
@@ -290,7 +311,8 @@ function countOriginals(){
   // اولین th عنوان "ویژگی‌ها" است
   let count = 0;
   for(let i=1;i<ths.length;i++){
-    if(/^قالب\s+\d+$/u.test(ths[i].textContent.trim().split('\n')[0])) count++;
+    const title = ths[i].textContent.trim().split('\n')[0];
+    if(/^قالب\s+\d+$/u.test(title)) count++;
   }
   return count;
 }
@@ -305,7 +327,7 @@ function addValuesToTable(col, vals, unit){
     }
     const v = vals[i];
     if(typeof v === 'number'){
-      if(i >= 9){ // Wr و Sh
+      if(i >= 9){ // Wr و Sh (فعلاً '-')
         cell.textContent = v;
       } else if(i === 8){ // درصد درگیری
         cell.textContent = v.toFixed(1) + ' (%)';
@@ -319,23 +341,52 @@ function addValuesToTable(col, vals, unit){
   }
 }
 
+/* پیام‌ها */
 function addWarning(text){
   const div = document.createElement('div');
   div.className = 'warningItem';
   div.textContent = text;
   document.getElementById('warningList').appendChild(div);
 }
+function addInfo(text){
+  const div = document.createElement('div');
+  div.className = 'infoItem';
+  div.textContent = text;
+  document.getElementById('warningList').appendChild(div);
+}
 function clearWarningList(templateTitle){
-  const ul = document.getElementById('warningList');
-  [...ul.children].forEach(child => {
-    if(child.textContent.startsWith(templateTitle)) child.remove();
+  const list = document.getElementById('warningList');
+  [...list.children].forEach(child => {
+    if (child.classList.contains('warningItem') && child.textContent.startsWith(templateTitle)) {
+      child.remove();
+    }
   });
 }
-function renderCorr(){
-  document.getElementById('correctionMessage').textContent = correctionHistory.join(' | ');
+function clearInfoByTitle(templateTitle){
+  const list = document.getElementById('warningList');
+  [...list.children].forEach(child => {
+    if (child.classList.contains('infoItem') && child.textContent.startsWith(templateTitle)) {
+      child.remove();
+    }
+  });
+}
+function removeWarningByTitle(templateTitle){
+  const list = document.getElementById('warningList');
+  [...list.children].forEach(child => {
+    const isRelated = child.textContent.startsWith(templateTitle);
+    if (isRelated) child.remove();
+  });
 }
 
-// ویرایش: فقط برای بارگذاری مقادیر مبنا، اما ثبت = ستون جدید
+/* خلاصهٔ بالاسریِ تعداد هشدارها */
+function renderCorr(){
+  // فقط warningItemها شمرده شوند (infoItemها شمرده نمی‌شوند)
+  const total = document.querySelectorAll('#warningList .warningItem').length;
+  const box = document.getElementById('correctionMessage');
+  box.textContent = total > 0 ? `جمع کل هشدارها: ${total} مورد` : '';
+}
+
+/* ویرایش: بارگذاری مقادیر مبنا، اما ثبت = ستون جدید */
 document.addEventListener('change', e => {
   if(e.target.classList.contains('editCheck')){
     if(e.target.checked){
@@ -367,8 +418,9 @@ function loadTemplate(idx){
 }
 function clearInputs(){ inputsOrder.forEach(id => document.getElementById(id).value = ''); }
 
+/* پرینت: جدول + هشدارها */
 function printReport(){
-  const name = prompt('کارشناس', 'مهندس خانی') || 'مهندس خانی';
+  const name = prompt('نام کارشناس', 'مهندس خانی') || 'مهندس خانی';
   document.getElementById('reporterName').textContent = name;
   document.getElementById('containerSelected').textContent = document.getElementById('containerType').value || '-';
   document.getElementById('analysisDate').textContent = new Date().toLocaleDateString('fa-IR');
@@ -380,23 +432,37 @@ function printReport(){
   hdr.style.visibility = prevVis || 'hidden';
 }
 
+/* خروجی Excel */
 function exportToExcel(){
   const table = document.getElementById('resultsTable').outerHTML;
+  const warningsHTML = document.getElementById('warningList').outerHTML;
+  const corrHTML = document.getElementById('correctionMessage').outerHTML;
+
   const style = `
     <style>
       table, th, td{ border:1px solid #555; border-collapse:collapse; padding:6px; text-align:center; font-family:Tahoma, sans-serif; font-size:12pt; }
       th{ background-color:#f0f4f8; }
+      .warningItem{ background:#ffe6e6; border:1px solid #ffb3b3; padding:4px 6px; margin:2px 0; }
+      .infoItem{ background:#e6f4ff; border:1px solid #b3daff; padding:4px 6px; margin:2px 0; }
     </style>`;
-  const html = `<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8">${style}</head><body>${table}</body></html>`;
+  const html = `<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8">${style}</head><body>
+    ${table}
+    <h3>پیام‌ها</h3>
+    ${warningsHTML}
+    ${corrHTML}
+  </body></html>`;
   const blob = new Blob([html], {type:'application/vnd.ms-excel'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = 'تحلیل_درگیری.xls'; a.click();
   URL.revokeObjectURL(url);
+  // نکته مهم برای ویندوز
+  setTimeout(()=>alert('پس از ذخیره فایل اکسل، روی فایل راست‌کلیک کرده و گزینه "Unblock" را فعال کنید تا بدون محدودیت باز شود.'), 200);
 }
 
+/* ذخیره HTML کامل */
 function saveAsHTML(){
-  const name = prompt('کارشناس', 'مهندس خانی') || 'مهندس خانی';
+  const name = prompt('نام گزارشگر', 'مهندس خانی') || 'مهندس خانی';
   const date = new Date().toLocaleDateString('fa-IR');
   const hdr = document.getElementById('printHeader');
   const prevVis = hdr.style.visibility;
@@ -417,14 +483,15 @@ function saveAsHTML(){
       table{ width:100%; border-collapse:collapse; margin-bottom:15px; }
       th,td{ border:1px solid #555; padding:6px; text-align:center; font-size:14px; }
       th{ background-color:#f0f4f8; }
-      #warnings{ margin-bottom:15px; }
-      #correctionMessage{ font-size:14px; color:#0077b6; margin-top:10px; border-top:1px solid #999; padding-top:6px; }
-      #pageFooter{ font-size:12px; color:#666; text-align:center; border-top:1px solid #ccc; padding-top:8px; }
+      .warningItem{ background:#ffe6e6; border:1px solid #ffb3b3; padding:6px 10px; margin:4px 0; border-radius:6px; }
+      .infoItem{ background:#e6f4ff; border:1px solid #b3daff; padding:6px 10px; margin:4px 0; border-radius:6px; }
+      #pageFooter{ font-size:12px; color:#666; text-align:center; border-top:1px solid #ccc; padding-top:8px; margin-top:12px; }
     </style>
   </head>
   <body>
     ${document.getElementById('printArea').innerHTML}
-    <div id="warnings">${document.getElementById('warnings').innerHTML}</div>
+    <h3>پیام‌ها</h3>
+    <div>${document.getElementById('warningList').innerHTML}</div>
     <div id="correctionMessage">${document.getElementById('correctionMessage').innerHTML}</div>
     <div id="pageFooter">© ۲۰۲۵ کارخانه یک‌و‌یک | نویسنده: مصیب خانی</div>
   </body>
@@ -439,6 +506,7 @@ function saveAsHTML(){
   hdr.style.visibility = prevVis || 'hidden';
 }
 
+/* راهنما (فشرده و زیبا + نکته Unblock) */
 function showHelp(){
   const helpHTML = `
 <div style="font-family:Tahoma; direction:rtl; line-height:1.6; background:#f9f9f9; border-radius:10px; padding:15px; border:1px solid #ccc; max-width:600px; margin:auto;">
@@ -472,13 +540,10 @@ function showHelp(){
   <p style="text-align:center; margin-top:10px; font-size:12px; color:#777;">
     © ۲۰۲۵ - مصیب خانی- کارخانه یک ویک دشت مرغاب
   </p>
-  <div style="text-align:center;">
-    <button id="helpCloseBtn" style="padding:8px 15px; border:none; background:#3498db; color:white; border-radius:5px; cursor:pointer;">بستن</button>
-  </div>
-</div>
-
-
-  `;
+    <div style="text-align:center;">
+      <button id="helpCloseBtn" style="padding:8px 15px; border:none; background:#3498db; color:white; border-radius:5px; cursor:pointer;">بستن</button>
+    </div>
+  </div>`;
   const helpBox = document.getElementById('helpBox');
   helpBox.innerHTML = helpHTML;
   document.getElementById('helpOverlay').style.display = 'flex';
@@ -487,6 +552,7 @@ function showHelp(){
   };
 }
 
+/* شروع */
 updateProgress();
 </script>
 
