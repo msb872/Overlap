@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>درصد درگیری دربندی قوطی فلزی - نسخه کامل</title>
+  <title>درصد درگیری دربندی قوطی فلزی - با عیب‌یابی و جستجوی زنده</title>
   <style>
     body { font-family: Tahoma, sans-serif; background:#eef2f7; direction:rtl; margin:0; padding:6px; color:#333; }
     header { background:#0077b6; color:#fff; padding:8px; border-radius:6px; text-align:center; margin-bottom:10px; }
@@ -29,11 +29,31 @@
       font-size:14px; line-height:1.3; text-align:justify; border:1px solid #b3daff;
     }
     #correctionMessage{ margin-top:10px; border-top:1px solid #999; padding-top:6px; font-size:14px; color:#0077b6; font-family:Tahoma, sans-serif; word-break:break-word; }
+    /* Help overlay */
     #helpOverlay{ position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:1000; }
-    #helpBox{ background:#fff; max-width:600px; width:90%; padding:20px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,.3); text-align:right; line-height:1.6; position:relative; font-family:Tahoma, sans-serif; font-size:14px; color:#333; }
+    #helpBox{ background:#fff; max-width:600px; width:90%; padding:20px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,.3); text-align:right; line-height:1.6; position:relative; font-size:14px; color:#333; }
     #helpCloseBtn{ position:absolute; top:8px; left:8px; padding:6px 12px; cursor:pointer; background:#3498db; color:#fff; border:none; border-radius:6px; font-size:13px; }
+
+    /* Troubleshooting overlay (multi-page + search) */
+    #tsOverlay{ position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; align-items:center; justify-content:center; z-index:1100; }
+    #tsBox{ background:#ffffff; width:min(820px,92vw); max-height:88vh; overflow:hidden; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,.35); display:flex; flex-direction:column; }
+    #tsHeader{ padding:10px 12px; background:#0d6efd; color:#fff; display:flex; gap:8px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+    #tsHeader h3{ margin:0; font-size:16px; }
+    .tsSearchWrap{ display:flex; align-items:center; gap:6px; background:rgba(255,255,255,.15); padding:6px; border-radius:8px; }
+    #tsSearch{ border:none; outline:none; padding:6px 10px; border-radius:6px; width:220px; }
+    #tsClear{ border:none; background:#fff; color:#0d6efd; padding:6px 10px; border-radius:6px; cursor:pointer; }
+    #tsClose{ background:#fff; color:#0d6efd; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; font-weight:bold; }
+    #tsContent{ padding:14px 18px; overflow:auto; line-height:1.9; color:#2c3e50; }
+    #tsFooter{ padding:10px 14px; background:#f6f8fa; display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+    .tsBtn{ border:none; padding:8px 14px; border-radius:8px; cursor:pointer; background:#0d6efd; color:#fff; font-size:14px; }
+    .tsBtn:disabled{ opacity:.5; cursor:not-allowed; }
+    #tsPageIndicator{ font-size:13px; color:#555; }
+    .tsList{ margin:0; padding-inline-start:18px; }
+    .tsList li{ margin-bottom:8px; text-align:justify; }
+    .hl{ background: #fff59d; padding:0 2px; border-radius:3px; }
+
     .footer-buttons{ position:fixed; bottom:10px; left:10px; display:flex; flex-direction:column; gap:8px; z-index:500; }
-    .footer-buttons button{ background:#0077b6; border:none; color:#fff; padding:8px 12px; border-radius:6px; cursor:pointer; font-size:14px; width:140px; text-align:center; }
+    .footer-buttons button{ background:#0077b6; border:none; color:#fff; padding:8px 12px; border-radius:6px; cursor:pointer; font-size:14px; width:180px; text-align:center; }
     .footer-buttons button:hover{ background:#005f99; }
     #pageFooter{ position:fixed; bottom:0; width:100%; background:#f1f1f1; text-align:center; padding:8px 0; font-size:14px; border-top:1px solid #ccc; font-family:Tahoma, sans-serif; }
 
@@ -43,15 +63,15 @@
       #printArea{ position:absolute !important; top:0; left:0; width:100%; }
       .footer-buttons{ display:none !important; }
     }
-    #printHeader{ display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px; font-weight:bold; border-bottom:1px solid #999; padding-bottom:8px; visibility:hidden; font-family:Tahoma, sans-serif; }
+    #printHeader{ display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px; font-weight:bold; border-bottom:1px solid #999; padding-bottom:8px; visibility:hidden; }
     #printHeader div{ width:33%; text-align:center; }
-    #printFooter{ text-align:center; font-size:12px; color:#666; margin-top:20px; border-top:1px solid #ccc; padding-top:8px; visibility:hidden; font-family:Tahoma, sans-serif; }
+    #printFooter{ text-align:center; font-size:12px; color:#666; margin-top:20px; border-top:1px solid #ccc; padding-top:8px; visibility:hidden; }
   </style>
 </head>
 <body>
 
 <header>
-  <h2>برنامه محاسبه درصد درگیری قوطی فلزی v1.14</h2>
+  <h2>برنامه محاسبه درصد درگیری قوطی فلزی v1.16</h2>
   <p>تهیه‌کننده: مصیب خانی - کارشناس کنترل کیفیت</p>
 </header>
 
@@ -60,19 +80,11 @@
 <div class="row-2selects">
   <label>📦 نوع ظرف:
     <select id="containerType">
-      <option>انتخاب</option>
-      <option>400g چاپدار</option>
-      <option>420g چاپدار</option>
-      <option>770g چاپدار</option>
-      <option>800g چاپدار</option>
-      <option>4000g چاپدار</option>
-      <option>16kg چاپدار</option>
-      <option>400g ساده</option>
-      <option>420g ساده</option>
-      <option>770g ساده</option>
-      <option>800g ساده</option>
-      <option>4000g ساده</option>
-      <option>16kg ساده</option>
+      <option>انتخاب</option><option>قوطی 400 گرمی چاپدار</option><option>قوطی 420 گرمی چاپدار</option>
+      <option>قوطی 770 گرمی چاپدار</option><option>قوطی 800 گرمی چاپدار</option><option>قوطی 4000 گرمی چاپدار</option>
+      <option>حلب 16 کیلویی چاپدار</option><option>حلب 17 کیلویی چاپدار</option><option>قوطی 400 گرمی ساده</option><option>قوطی 420 گرمی ساده</option>
+      <option>قوطی 770 گرمی ساده</option><option>قوطی 800 گرمی ساده</option><option>قوطی 4000 گرمی ساده</option><option>حلب 16 کیلویی ساده</option>
+      <option>حلب 17 کیلویی ساده</option>
     </select>
   </label>
   <label>📐 واحد ورودی:
@@ -84,12 +96,12 @@
 </div>
 
 <div class="input-row">
-  <label>طول-SL<input type="number" id="length" min="0" step="0.01" autocomplete="off"></label>
-  <label>ضخامت-ST<input type="number" id="seamThickness" min="0" step="0.01" autocomplete="off"></label>
+  <label> طول دوخت-SL<input type="number" id="length" min="0" step="0.01" autocomplete="off"></label>
+  <label>دوخت ضخامت-ST<input type="number" id="seamThickness" min="0" step="0.01" autocomplete="off"></label>
   <label>قلاب درب-CH<input type="number" id="coverHook" min="0" step="0.01" autocomplete="off"></label>
   <label>قلاب بدنه-BH<input type="number" id="bodyHook" min="0" step="0.01" autocomplete="off"></label>
-  <label>ضخامت سر-Te<input type="number" id="headThickness" min="0" step="0.01" autocomplete="off"></label>
-  <label>ضخامت بدنه-Tb<input type="number" id="bodyThickness" min="0" step="0.01" autocomplete="off"></label>
+  <label>ضخامت ورق سر-Te<input type="number" id="headThickness" min="0" step="0.01" autocomplete="off"></label>
+  <label>ضخامت ورق بدنه-Tb<input type="number" id="bodyThickness" min="0" step="0.01" autocomplete="off"></label>
   <button id="calcBtn" onclick="addTemplate()">➕ محاسبه/جدید</button>
 </div>
 
@@ -107,16 +119,16 @@
       <tr id="headerRow"><th>ویژگی‌ها</th></tr>
     </thead>
     <tbody id="tableBody">
-      <tr><td>طول دوخت (SL)</td></tr>
-      <tr><td>ضخامت دوخت (ST)</td></tr>
+      <tr><td>دوخت طول (SL)</td></tr>
+      <tr><td>دوخت ضخامت (ST)</td></tr>
       <tr><td>قلاب درب (CH)</td></tr>
       <tr><td>قلاب بدنه (BH)</td></tr>
       <tr><td>ضخامت سر (Te)</td></tr>
       <tr><td>ضخامت بدنه (Tb)</td></tr>
-      <tr><td>اختلاف قلاب (ΔH)</td></tr>
+      <tr><td>قلاب اختلاف (ΔH)</td></tr>
       <tr><td>فضای آزاد (FS)</td></tr>
       <tr><td>درصد درگیری (OL%)</td></tr>
-      <tr><td>چروکیدگی قلاب (Wr)</td></tr>
+      <tr><td>چروکیدگی (Wr)</td></tr>
       <tr><td>تیزکردگی (Sh)</td></tr>
     </tbody>
   </table>
@@ -133,10 +145,32 @@
   <button onclick="exportToExcel()">📤 Excel</button>
   <button onclick="saveAsHTML()">💾 HTML</button>
   <button onclick="showHelp()">ℹ️ راهنما</button>
+  <button onclick="openTroubleshooting()">📚 راهنمای عیب‌یابی</button>
 </div>
 
+<!-- Help Overlay -->
 <div id="helpOverlay">
   <div id="helpBox"></div>
+</div>
+
+<!-- Troubleshooting Overlay (multi-page + live search) -->
+<div id="tsOverlay" aria-hidden="true">
+  <div id="tsBox">
+    <div id="tsHeader">
+      <h3>راهنمای عیب‌یابی دستگاه دربندی</h3>
+      <div class="tsSearchWrap">
+        <input id="tsSearch" type="text" placeholder="جستجوی زنده..." />
+        <button id="tsClear" title="پاک‌کردن جستجو">پاک</button>
+      </div>
+      <button id="tsClose">بستن</button>
+    </div>
+    <div id="tsContent"></div>
+    <div id="tsFooter">
+      <button class="tsBtn" id="tsPrev">قبلی</button>
+      <span id="tsPageIndicator">صفحه 1 از N</span>
+      <button class="tsBtn" id="tsNext">بعدی</button>
+    </div>
+  </div>
 </div>
 
 <div id="pageFooter">
@@ -144,33 +178,22 @@
 </div>
 
 <script>
+/* ---------- منطق اصلی برنامه (بدون تغییر نسبت به نسخه قبلی) ---------- */
 let templatesData = [];
 let isEditing = false;
 let editingIndex = -1;
-// history فقط خلاصهٔ تعداد هشدارها برای نمایش بالاسری
 let correctionHistory = []; // [{title, count}]
-
 const inputsOrder = ['length','seamThickness','coverHook','bodyHook','headThickness','bodyThickness'];
 
-/* تبدیل واحد */
 function toMM(thou){ return thou * 0.0254; }
 function toThou(mm){ return mm / 0.0254; }
-
-function formatVal(thou, unit){
-  if(unit === 'mm'){
-    const mm = toMM(thou);
-    return mm.toFixed(2) + ' (mm)';
-  } else {
-    return thou.toFixed(2) + ' (thou)';
-  }
-}
+function formatVal(thou, unit){ return unit==='mm' ? (toMM(thou).toFixed(2)+' (mm)') : (thou.toFixed(2)+' (thou)'); }
 
 function updateProgress(){
   const ins = inputsOrder.map(id => document.getElementById(id));
   const filled = ins.filter(i => i.value !== '').length;
   document.getElementById('progress').style.width = (filled / ins.length * 100) + '%';
 }
-
 document.querySelectorAll('.input-row input,.input-row select').forEach(i => {
   i.addEventListener('input', e => {
     if(e.target.id === 'unitSelect'){
@@ -183,8 +206,6 @@ document.querySelectorAll('.input-row input,.input-row select').forEach(i => {
     updateProgress();
   });
 });
-
-/* ناوبری با Enter */
 inputsOrder.forEach((id, i) => {
   const el = document.getElementById(id);
   el.addEventListener('keydown', e => {
@@ -198,117 +219,75 @@ inputsOrder.forEach((id, i) => {
     }
   });
 });
-document.getElementById('calcBtn').addEventListener('keydown', e => {
-  if(e.key === 'Enter'){
-    e.preventDefault();
-    addTemplate();
-  }
-});
+document.getElementById('calcBtn').addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); addTemplate(); } });
 
-/* آستانه‌ها (thou) */
-const LIMITS_T = {
-  CH_MIN: 70,     // ~1.78 mm
-  BH_MIN: 70,     // ~1.78 mm
-  DIFF_MAX: 7.8,  // ~0.20 mm
-  FREE_MAX: 7.5,  // ~0.19 mm
-  OL_MIN: 45      // %
-};
+const LIMITS_T = { CH_MIN:70, BH_MIN:70, DIFF_MAX:7.8, FREE_MAX:7.5, OL_MIN:45 };
 
 function addTemplate(){
   const unit = document.getElementById('unitSelect').value;
-
-  // ورودی‌ها → به thou برای محاسبه
   let raw = inputsOrder.map(id => parseFloat(document.getElementById(id).value));
-  if(raw.some(v => isNaN(v) || v < 0)){
-    alert('لطفاً همه مقادیر را به درستی وارد کنید');
-    return;
-  }
+  if(raw.some(v => isNaN(v) || v < 0)){ alert('لطفاً همه مقادیر را به درستی وارد کنید'); return; }
   if(unit === 'mm') raw = raw.map(v => toThou(v));
   const [L, ST, CH, BH, Te, Tb] = raw;
 
-  const diff = Math.abs(CH - BH);                         // ΔH
-  const free = Math.abs(ST - (3*Te + 2*Tb));              // FS
+  const diff = Math.abs(CH - BH);
+  const free = Math.abs(ST - (3*Te + 2*Tb));
   const denom = L - (2.2*Te + 1.1*Tb);
-  const overlap = denom ? Math.abs((L - (CH + BH + 1.1*Te)) / denom * 100) : 0; // %
+  const overlap = denom ? Math.abs((L - (CH + BH + 1.1*Te)) / denom * 100) : 0;
 
-  /* --- رفتار اصلاحیه: همیشه ستون جدید --- */
   const newIndex = templatesData.length;
   templatesData.push({L,ST,CH,BH,Te,Tb});
 
-  const title = isEditing
-    ? `اصلاحیه قالب ${editingIndex + 1}`
-    : `قالب ${countOriginals() + 1}`;
+  const title = isEditing ? `اصلاحیه قالب ${editingIndex + 1}` : `قالب ${countOriginals() + 1}`;
 
-  // ساخت سربرگ ستون
   const th = document.createElement('th');
   th.innerHTML = `${title}<br>
     <input type="checkbox" class="editCheck" data-idx="${newIndex}">
     <button class="del" style="margin-left:6px">حذف</button>`;
   document.getElementById('headerRow').appendChild(th);
 
-  // حذف ستون + پاکسازی پیام‌های مربوط به همان عنوان + به‌روزرسانی خلاصه
   th.querySelector('.del').onclick = () => {
     const colIndex = [...document.getElementById('headerRow').children].indexOf(th);
     th.remove();
-    document.querySelectorAll('#tableBody tr').forEach(r => {
-      if(r.children[colIndex]) r.children[colIndex].remove();
-    });
+    document.querySelectorAll('#tableBody tr').forEach(r => { if(r.children[colIndex]) r.children[colIndex].remove(); });
     removeWarningByTitle(title);
     correctionHistory = correctionHistory.filter(obj => obj.title !== title);
     renderCorr();
-    isEditing = false; editingIndex = -1;
-    document.getElementById('calcBtn').textContent = '➕ محاسبه/جدید';
+    isEditing = false; editingIndex = -1; document.getElementById('calcBtn').textContent = '➕ محاسبه/جدید';
   };
 
   const colIndex = document.getElementById('headerRow').children.length - 1;
-
-  // درج داده‌ها در جدول
   const vals = [L, ST, CH, BH, Te, Tb, diff, free, overlap, '-', '-'];
   addValuesToTable(colIndex, vals, unit);
 
-  // تولید هشدارها (نمایش با واحد انتخابی کاربر)
   const warns = [];
   const mark = (row, msg) => {
     document.querySelectorAll('#tableBody tr')[row].children[colIndex].style.background = '#ffd2d2';
     warns.push(msg);
   };
-
   if (CH < LIMITS_T.CH_MIN) mark(2, `قلاب درب کمتر از ${formatVal(LIMITS_T.CH_MIN, unit)}`);
   if (BH < LIMITS_T.BH_MIN) mark(3, `قلاب بدنه کمتر از ${formatVal(LIMITS_T.BH_MIN, unit)}`);
   if (diff > LIMITS_T.DIFF_MAX) mark(6, `اختلاف قلاب بیشتر از ${formatVal(LIMITS_T.DIFF_MAX, unit)}`);
   if (free > LIMITS_T.FREE_MAX) mark(7, `فضای آزاد بیشتر از ${formatVal(LIMITS_T.FREE_MAX, unit)}`);
   if (overlap < LIMITS_T.OL_MIN) mark(8, `درصد درگیری کمتر از ${LIMITS_T.OL_MIN}%`);
 
-  // پاک‌کردن پیام‌های قبلی همین عنوان و درج جدید (جلوگیری از تکرار)
   clearWarningList(title);
   clearInfoByTitle(title);
 
-  if(warns.length > 0){
-    addWarning(`${title}: ${warns.join(' ؛ ')}`);
-  }
+  if(warns.length > 0){ addWarning(`${title}: ${warns.join(' ؛ ')}`); }
+  if (isEditing) { const baseTemplate = `قالب ${editingIndex + 1}`; addInfo(`${title}: جهت اصلاح ${baseTemplate} ثبت شد`); }
 
-  // اگر ستون «اصلاحیه» است، پیام اطلاع‌رسان آبی اضافه کن
-  if (isEditing) {
-    const baseTemplate = `قالب ${editingIndex + 1}`;
-    addInfo(`${title}: جهت اصلاح ${baseTemplate} ثبت شد`);
-  }
-
-  // ذخیرهٔ خلاصه (فقط تعداد هشدارها) برای نمایش بالاسری
   correctionHistory.push({ title, count: warns.length });
   renderCorr();
 
-  // ریست فرم و حالت اصلاح
   inputsOrder.forEach(id => document.getElementById(id).value = '');
-  isEditing = false;
-  editingIndex = -1;
+  isEditing = false; editingIndex = -1;
   document.getElementById('calcBtn').textContent = '➕ محاسبه/جدید';
   updateProgress();
 }
 
-/* شمارنده قالب‌های اصلی (نه اصلاحیه‌ها) بر اساس عنوان ستون‌ها */
 function countOriginals(){
   const ths = [...document.getElementById('headerRow').children];
-  // اولین th عنوان "ویژگی‌ها" است
   let count = 0;
   for(let i=1;i<ths.length;i++){
     const title = ths[i].textContent.trim().split('\n')[0];
@@ -321,123 +300,68 @@ function addValuesToTable(col, vals, unit){
   const rows = document.querySelectorAll('#tableBody tr');
   for(let i=0; i<vals.length; i++){
     let cell = rows[i].children[col];
-    if(!cell){
-      cell = document.createElement('td');
-      rows[i].appendChild(cell);
-    }
+    if(!cell){ cell = document.createElement('td'); rows[i].appendChild(cell); }
     const v = vals[i];
     if(typeof v === 'number'){
-      if(i >= 9){ // Wr و Sh (فعلاً '-')
-        cell.textContent = v;
-      } else if(i === 8){ // درصد درگیری
-        cell.textContent = v.toFixed(1) + ' (%)';
-      } else {
-        cell.textContent = formatVal(v, unit);
-      }
-    } else {
-      cell.textContent = v;
-    }
+      if(i >= 9){ cell.textContent = v; }
+      else if(i === 8){ cell.textContent = v.toFixed(1) + ' (%)'; }
+      else { cell.textContent = formatVal(v, unit); }
+    } else { cell.textContent = v; }
     cell.style.background = '';
   }
 }
 
 /* پیام‌ها */
-function addWarning(text){
-  const div = document.createElement('div');
-  div.className = 'warningItem';
-  div.textContent = text;
-  document.getElementById('warningList').appendChild(div);
-}
-function addInfo(text){
-  const div = document.createElement('div');
-  div.className = 'infoItem';
-  div.textContent = text;
-  document.getElementById('warningList').appendChild(div);
-}
+function addWarning(text){ const div=document.createElement('div'); div.className='warningItem'; div.textContent=text; document.getElementById('warningList').appendChild(div); }
+function addInfo(text){ const div=document.createElement('div'); div.className='infoItem'; div.textContent=text; document.getElementById('warningList').appendChild(div); }
 function clearWarningList(templateTitle){
-  const list = document.getElementById('warningList');
-  [...list.children].forEach(child => {
-    if (child.classList.contains('warningItem') && child.textContent.startsWith(templateTitle)) {
-      child.remove();
-    }
-  });
+  const list=document.getElementById('warningList');
+  [...list.children].forEach(child => { if(child.classList.contains('warningItem') && child.textContent.startsWith(templateTitle)) child.remove(); });
 }
 function clearInfoByTitle(templateTitle){
-  const list = document.getElementById('warningList');
-  [...list.children].forEach(child => {
-    if (child.classList.contains('infoItem') && child.textContent.startsWith(templateTitle)) {
-      child.remove();
-    }
-  });
+  const list=document.getElementById('warningList');
+  [...list.children].forEach(child => { if(child.classList.contains('infoItem') && child.textContent.startsWith(templateTitle)) child.remove(); });
 }
 function removeWarningByTitle(templateTitle){
-  const list = document.getElementById('warningList');
-  [...list.children].forEach(child => {
-    const isRelated = child.textContent.startsWith(templateTitle);
-    if (isRelated) child.remove();
-  });
+  const list=document.getElementById('warningList');
+  [...list.children].forEach(child => { if(child.textContent.startsWith(templateTitle)) child.remove(); });
 }
+function renderCorr(){ const total=document.querySelectorAll('#warningList .warningItem').length; document.getElementById('correctionMessage').textContent = total>0 ? `جمع کل هشدارها: ${total} مورد` : ''; }
 
-/* خلاصهٔ بالاسریِ تعداد هشدارها */
-function renderCorr(){
-  // فقط warningItemها شمرده شوند (infoItemها شمرده نمی‌شوند)
-  const total = document.querySelectorAll('#warningList .warningItem').length;
-  const box = document.getElementById('correctionMessage');
-  box.textContent = total > 0 ? `جمع کل هشدارها: ${total} مورد` : '';
-}
-
-/* ویرایش: بارگذاری مقادیر مبنا، اما ثبت = ستون جدید */
+/* ویرایش: بارگذاری مقادیر */
 document.addEventListener('change', e => {
   if(e.target.classList.contains('editCheck')){
     if(e.target.checked){
-      isEditing = true;
-      editingIndex = +e.target.dataset.idx;
-      loadTemplate(editingIndex);
+      isEditing = true; editingIndex = +e.target.dataset.idx; loadTemplate(editingIndex);
       document.querySelectorAll('.editCheck').forEach(chk => { if(chk !== e.target) chk.checked = false; });
-      document.getElementById('calcBtn').textContent = '📝 اصلاح قالب';
-      document.getElementById('calcBtn').focus();
-    } else {
-      isEditing = false;
-      editingIndex = -1;
-      clearInputs();
-      document.getElementById('calcBtn').textContent = '➕ محاسبه/جدید';
-    }
+      document.getElementById('calcBtn').textContent = '📝 اصلاح قالب'; document.getElementById('calcBtn').focus();
+    } else { isEditing=false; editingIndex=-1; clearInputs(); document.getElementById('calcBtn').textContent='➕ محاسبه/جدید'; }
   }
 });
-
 function loadTemplate(idx){
-  const t = templatesData[idx];
-  if(!t) return;
+  const t = templatesData[idx]; if(!t) return;
   const unit = document.getElementById('unitSelect').value;
-  document.getElementById('length').value        = unit === 'mm' ? toMM(t.L).toFixed(2)  : t.L.toFixed(2);
-  document.getElementById('seamThickness').value = unit === 'mm' ? toMM(t.ST).toFixed(2) : t.ST.toFixed(2);
-  document.getElementById('coverHook').value     = unit === 'mm' ? toMM(t.CH).toFixed(2) : t.CH.toFixed(2);
-  document.getElementById('bodyHook').value      = unit === 'mm' ? toMM(t.BH).toFixed(2) : t.BH.toFixed(2);
-  document.getElementById('headThickness').value = unit === 'mm' ? toMM(t.Te).toFixed(2) : t.Te.toFixed(2);
-  document.getElementById('bodyThickness').value = unit === 'mm' ? toMM(t.Tb).toFixed(2) : t.Tb.toFixed(2);
+  document.getElementById('length').value        = unit==='mm'? toMM(t.L).toFixed(2)  : t.L.toFixed(2);
+  document.getElementById('seamThickness').value = unit==='mm'? toMM(t.ST).toFixed(2) : t.ST.toFixed(2);
+  document.getElementById('coverHook').value     = unit==='mm'? toMM(t.CH).toFixed(2) : t.CH.toFixed(2);
+  document.getElementById('bodyHook').value      = unit==='mm'? toMM(t.BH).toFixed(2) : t.BH.toFixed(2);
+  document.getElementById('headThickness').value = unit==='mm'? toMM(t.Te).toFixed(2) : t.Te.toFixed(2);
+  document.getElementById('bodyThickness').value = unit==='mm'? toMM(t.Tb).toFixed(2) : t.Tb.toFixed(2);
 }
 function clearInputs(){ inputsOrder.forEach(id => document.getElementById(id).value = ''); }
 
-/* پرینت: جدول + هشدارها */
+/* پرینت/اکسل/HTML */
 function printReport(){
-  const name = prompt('نام کارشناس', 'مهندس خانی') || 'مهندس خانی';
+  const name = "مهندس خانی";
   document.getElementById('reporterName').textContent = name;
   document.getElementById('containerSelected').textContent = document.getElementById('containerType').value || '-';
   document.getElementById('analysisDate').textContent = new Date().toLocaleDateString('fa-IR');
-
-  const hdr = document.getElementById('printHeader');
-  const prevVis = hdr.style.visibility;
-  hdr.style.visibility = 'visible';
-  window.print();
-  hdr.style.visibility = prevVis || 'hidden';
+  const hdr=document.getElementById('printHeader'); const prevVis=hdr.style.visibility; hdr.style.visibility='visible'; window.print(); hdr.style.visibility=prevVis||'hidden';
 }
-
-/* خروجی Excel */
 function exportToExcel(){
-  const table = document.getElementById('resultsTable').outerHTML;
-  const warningsHTML = document.getElementById('warningList').outerHTML;
-  const corrHTML = document.getElementById('correctionMessage').outerHTML;
-
+  const table=document.getElementById('resultsTable').outerHTML;
+  const warningsHTML=document.getElementById('warningList').outerHTML;
+  const corrHTML=document.getElementById('correctionMessage').outerHTML;
   const style = `
     <style>
       table, th, td{ border:1px solid #555; border-collapse:collapse; padding:6px; text-align:center; font-family:Tahoma, sans-serif; font-size:12pt; }
@@ -446,67 +370,44 @@ function exportToExcel(){
       .infoItem{ background:#e6f4ff; border:1px solid #b3daff; padding:4px 6px; margin:2px 0; }
     </style>`;
   const html = `<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8">${style}</head><body>
-    ${table}
-    <h3>پیام‌ها</h3>
-    ${warningsHTML}
-    ${corrHTML}
+    ${table}<h3>پیام‌ها</h3>${warningsHTML}${corrHTML}
   </body></html>`;
-  const blob = new Blob([html], {type:'application/vnd.ms-excel'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'تحلیل_درگیری.xls'; a.click();
-  URL.revokeObjectURL(url);
-  // نکته مهم برای ویندوز
-  setTimeout(()=>alert('پس از ذخیره فایل اکسل، روی فایل راست‌کلیک کرده و گزینه "Unblock" را فعال کنید تا بدون محدودیت باز شود.'), 200);
+  const blob=new Blob([html], {type:'application/vnd.ms-excel'}); const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='تحلیل_درگیری.xls'; a.click(); URL.revokeObjectURL(url);
+  setTimeout(()=>alert('پس از ذخیره فایل اکسل، روی فایل راست‌کلیک کرده و گزینه "Unblock" را فعال کنید.'), 200);
 }
-
-/* ذخیره HTML کامل */
 function saveAsHTML(){
   const name = prompt('نام گزارشگر', 'مهندس خانی') || 'مهندس خانی';
   const date = new Date().toLocaleDateString('fa-IR');
-  const hdr = document.getElementById('printHeader');
-  const prevVis = hdr.style.visibility;
-
-  hdr.style.visibility = 'visible';
-  document.getElementById('analysisDate').textContent = date;
-  document.getElementById('reporterName').textContent = name;
-  document.getElementById('containerSelected').textContent = document.getElementById('containerType').value || '-';
-
-  const content = `
-  <!DOCTYPE html>
-  <html lang="fa" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <title>گزارش تحلیل درگیری</title>
-    <style>
-      body{ font-family:Tahoma, sans-serif; direction:rtl; background:#fff; color:#333; margin:20px; }
-      table{ width:100%; border-collapse:collapse; margin-bottom:15px; }
-      th,td{ border:1px solid #555; padding:6px; text-align:center; font-size:14px; }
-      th{ background-color:#f0f4f8; }
-      .warningItem{ background:#ffe6e6; border:1px solid #ffb3b3; padding:6px 10px; margin:4px 0; border-radius:6px; }
-      .infoItem{ background:#e6f4ff; border:1px solid #b3daff; padding:6px 10px; margin:4px 0; border-radius:6px; }
-      #pageFooter{ font-size:12px; color:#666; text-align:center; border-top:1px solid #ccc; padding-top:8px; margin-top:12px; }
-    </style>
-  </head>
-  <body>
+  const hdr=document.getElementById('printHeader'); const prevVis=hdr.style.visibility;
+  hdr.style.visibility='visible';
+  document.getElementById('analysisDate').textContent=date;
+  document.getElementById('reporterName').textContent=name;
+  document.getElementById('containerSelected').textContent=document.getElementById('containerType').value || '-';
+  const content=`
+  <!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8" />
+  <title>گزارش تحلیل درگیری</title>
+  <style>
+    body{ font-family:Tahoma, sans-serif; direction:rtl; background:#fff; color:#333; margin:20px; }
+    table{ width:100%; border-collapse:collapse; margin-bottom:15px; }
+    th,td{ border:1px solid #555; padding:6px; text-align:center; font-size:14px; }
+    th{ background-color:#f0f4f8; }
+    .warningItem{ background:#ffe6e6; border:1px solid #ffb3b3; padding:6px 10px; margin:4px 0; border-radius:6px; }
+    .infoItem{ background:#e6f4ff; border:1px solid #b3daff; padding:6px 10px; margin:4px 0; border-radius:6px; }
+    #pageFooter{ font-size:12px; color:#666; text-align:center; border-top:1px solid #ccc; padding-top:8px; margin-top:12px; }
+  </style></head><body>
     ${document.getElementById('printArea').innerHTML}
     <h3>پیام‌ها</h3>
     <div>${document.getElementById('warningList').innerHTML}</div>
     <div id="correctionMessage">${document.getElementById('correctionMessage').innerHTML}</div>
     <div id="pageFooter">© ۲۰۲۵ کارخانه یک‌و‌یک | نویسنده: مصیب خانی</div>
-  </body>
-  </html>`;
-
-  const blob = new Blob([content], {type:'text/html'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = `گزارش_${date}.html`; a.click();
-  URL.revokeObjectURL(url);
-
-  hdr.style.visibility = prevVis || 'hidden';
+  </body></html>`;
+  const blob=new Blob([content], {type:'text/html'}); const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=`گزارش_${date}.html`; a.click(); URL.revokeObjectURL(url);
+  hdr.style.visibility=prevVis||'hidden';
 }
 
-/* راهنما (فشرده و زیبا + نکته Unblock) */
+/* راهنمای سریع */
 function showHelp(){
   const helpHTML = `
 <div style="font-family:Tahoma; direction:rtl; line-height:1.6; background:#f9f9f9; border-radius:10px; padding:15px; border:1px solid #ccc; max-width:600px; margin:auto;">
@@ -541,16 +442,157 @@ function showHelp(){
     © ۲۰۲۵ - مصیب خانی- کارخانه یک ویک دشت مرغاب
   </p>
     <div style="text-align:center;">
-      <button id="helpCloseBtn" style="padding:8px 15px; border:none; background:#3498db; color:white; border-radius:5px; cursor:pointer;">بستن</button>
-    </div>
+      <button id="helpCloseBtn" style="padding:8px 15px; border:none; background:#3498db; color:white; border-radius:5px; cursor:pointer;">بستن</button></div>
   </div>`;
   const helpBox = document.getElementById('helpBox');
   helpBox.innerHTML = helpHTML;
   document.getElementById('helpOverlay').style.display = 'flex';
-  document.getElementById('helpCloseBtn').onclick = () => {
-    document.getElementById('helpOverlay').style.display = 'none';
-  };
+  document.getElementById('helpCloseBtn').onclick = () => { document.getElementById('helpOverlay').style.display = 'none'; };
 }
+
+/* ---------- Troubleshooting content (pages) ---------- */
+const tsPages = [
+`<p>پس از تنظیمات اولیه دستگاه دربندی و نمونه‌برداری و آزمایشات لازم، در صورت وجود اشکال و با فرض استاندارد بودن تمامی ابعاد فنی قوطی‌های ساخته‌شده، مطابق موارد زیر اقدام کنید.</p>
+<ol class="tsList" start="1">
+  <li><b>طول قلاب سر – کم بودن از حد مجاز:</b> تنظیم قرقره‌های عمل اول (نزدیک‌تر به دیسک تا حد مجاز افقی)، تنظیم قرقره‌های عمل دوم نیز مؤثر است. کنترل ابعاد دیسک نسبت به درب قوطی. در صورت عدم اصلاح، تعویض قرقره‌های مربوطه.</li>
+  <li><b>طول قلاب سر – زیادتر از حد مجاز:</b> فاصله‌دار کردن قرقره‌های عمل اول از دیسک (فیلر بزرگ‌تر). در صورت عدم اصلاح، قرقره‌های عمل دوم نیز با فیلر بزرگ‌تر تنظیم گردند (با حفظ ضخامت دوخت استاندارد). در نهایت تعویض قرقره‌ها.</li>
+</ol>`,
+`<ol class="tsList" start="3">
+  <li><b>طول قلاب بدنه:</b> کم بودن → افزایش فشار پدال؛ زیاد بودن → کاهش فشار پدال. اگر با تنظیم فشار پدال قلاب بدنه استاندارد و قوطی می‌چرخد/می‌ایستد، دیسک کوچک/فرسوده است و باید متناسب ساخته/تعویض شود.</li>
+  <li><b>طول دوخت:</b> کم بودن → نزدیک‌تر کردن قرقره‌های عمل دوم به دیسک (فیلر کوچک‌تر). زیاد بودن → با حفظ ضخامت استاندارد، فیلر عمل دوم بزرگ‌تر شود. باز بودن عمل اول (فیلر بزرگ) نیز طول دوخت را افزایش می‌دهد. در صورت عدم حصول، تعویض قرقره‌های عمل اول و دوم.</li>
+</ol>`,
+`<ol class="tsList" start="5">
+  <li><b>ضخامت دوخت:</b> زیاد → فیلرگیری عمل دوم جذب‌تر؛ کم → فیلرگیری بازتر. در صورت عدم حصول با وجود نزدیک‌کردن، تعویض قرقره‌های عمل دوم. در موارد لقی عمودی/افقی شافت و بازوها، رفع عیب توسط افراد کاردان.</li>
+  <li><b>عمق دوخت:</b> تابع زوایا و ابعاد دیسک است و کمتر با تنظیم اصلاح می‌شود؛ نیاز به ساخت/تعویض دیسک استاندارد دارد.</li>
+</ol>`,
+`<ol class="tsList" start="7">
+  <li><b>درصد درگیری:</b> تابع طول قلاب‌ها و طول دوخت است. درگیری کم → کنترل و رساندن CH و BH و طول دوخت به حدود استاندارد؛ می‌توان با کاهش طول دوخت یا افزایش قلاب‌ها درگیری را بالا برد.</li>
+  <li><b>فضای آزاد بین لایه‌ها:</b> رابطه مستقیم با ضخامت دوخت دارد؛ با استاندارد شدن ضخامت، فضای آزاد نیز استاندارد می‌شود.</li>
+</ol>`,
+`<ol class="tsList" start="9">
+  <li><b>چرخیدن/سر خوردن قوطی:</b> باعث افزایش طول دوخت (عمل اول) و افزایش ضخامت (عمل دوم) می‌شود و مردود است. علل: نزدیکی بیش از حد قرقره به دیسک، فرسودگی دیسک، فشار پدال کم.</li>
+  <li><b>غیریکنواختی فاکتورهای دوخت:</b> ناشی از تنظیم نامناسب (یکی جلوتر/عقب‌تر)، لنگی دیسک/شافت، بزرگ بودن دیسک نسبت به درب، کجی سطح پدال. باید تک‌تک بررسی و رفع شود.</li>
+</ol>`,
+`<ol class="tsList" start="11">
+  <li><b>تیزی، پله یا بریدگی دوخت:</b> از تنظیم غلط نسبت به دیسک (ارتفاعی/افقی)، فشار پدال زیاد، یا فرسودگی دیسک ناشی می‌شود. موارد را تشخیص و اصلاح کنید.</li>
+  <li><b>بریدگی از پایین دوخت:</b> وقتی عمل اول از نظر عمودی یکی پایین‌تر و یکی بالاتر باشد یا فاصله افقی زیاد باشد، خط و بریدگی از زیر رخ می‌دهد. باریک بودن قرقره‌های عمل اول نیز مؤثر است.</li>
+</ol>`,
+`<ol class="tsList" start="13">
+  <li><b>پایین افتادگی (داخلی/خارجی):</b> از باز بودن بیش از حد قرقره‌ها نسبت به دیسک، فرسودگی یا گیر کردن بلبرینگ قرقره‌ها ناشی می‌شود. ضربه به درب در کانال انتقال نیز سبب نقاطی از پایین‌افتادگی می‌شود.</li>
+  <li><b>چین و چروک قلاب سر:</b> با نزدیک‌تر کردن قرقره‌های عمل دوم به دیسک اصلاح می‌شود. در صورت عدم اصلاح، تعویض قرقره‌های عمل دوم. کوچک بودن دیسک نسبت به درب نیز عامل چروک است.</li>
+</ol>`,
+`<ol class="tsList" start="15">
+  <li><b>پیک/دکمه زدن دوخت:</b> ناشی از گیرکردن حرکت چرخشی بلبرینگ قرقره‌ها، لقی عمودی، یا ضربه در مسیر فیدر/کانال‌ها. نقاط ضرب‌دیده دوخت نمی‌شوند و بیرون‌زدگی دیده می‌شود. اگر چندنقطه‌ای باشد از قرقره‌ها و فرسودگی شدید است.</li>
+  <li><b>گیر کردن قوطی و درب به دیسک:</b> از فرسودگی شدید دیسک، نزدیکی بیش از حد قرقره‌ها، اختلاف زیاد فاصله عمودی قرقره با دیسک، یا بزرگ بودن دیسک نسبت به درب ناشی می‌شود.</li>
+  <li><b>دوخت ناقص:</b> هم‌مرکز نبودن درب و قوطی، ضرب‌دیدگی درب/قوطی، بیضی شدن قوطی، یا تایم غلط ستاره‌ها/انگشتی‌ها نسبت به پدال. باید تنظیم شوند تا از زاویه ۹۰ درجه کاملاً هم‌مرکز باشند؛ قطعات فرسوده تعویض شوند.</li>
+</ol>`,
+`<ol class="tsList" start="17">
+  <li><b>چین‌خوردگی و تاخوردگی:</b> تاخوردگی و برگشتگی قلاب سر در مرحله اول ایجاد می‌شود؛ علل: گیرپاچ بلبرینگ قرقره‌ها، ضرب‌دیدگی درب، تنظیم نامناسب/فرسودگی تیغه‌های فیدر درب. چین‌خوردگی حالت بین چروک و تاخوردگی است.</li>
+</ol>`
+];
+
+/* --- جستجوی زنده + هایلایت --- */
+let tsIndex = 0;               // اندیس صفحهٔ فعلی (در کل صفحات)
+let matchedPages = null;       // آرایهٔ اندیس صفحاتی که با جستجو match شده‌اند؛ null یعنی همهٔ صفحات
+let searchTerm = '';           // عبارت جستجو (کوچک‌سازی‌شده)
+
+function openTroubleshooting(){
+  tsIndex = 0; matchedPages = null; searchTerm = '';
+  document.getElementById('tsSearch').value = '';
+  renderTsPage();
+  document.getElementById('tsOverlay').style.display = 'flex';
+  document.getElementById('tsOverlay').setAttribute('aria-hidden','false');
+  setTimeout(()=>document.getElementById('tsSearch').focus(), 50);
+}
+function closeTroubleshooting(){
+  document.getElementById('tsOverlay').style.display = 'none';
+  document.getElementById('tsOverlay').setAttribute('aria-hidden','true');
+}
+
+function getActivePages(){
+  // اگر جستجو فعال است، فقط صفحات match‌شده را برگردان؛ در غیر این‌صورت همهٔ صفحات
+  if (matchedPages && matchedPages.length) return matchedPages;
+  return tsPages.map((_,i)=>i);
+}
+
+function highlightHTML(html, term){
+  if(!term) return html;
+  // کاراکترهای خاص regex را escape کنیم
+  const esc = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(`(${esc})`, 'gi');
+  // برای اینکه داخل تگ‌های HTML هایلایت نشود، ساده‌ترین روش split روی متن است:
+  // چون محتوا کوتاه است، رویکرد replace مستقیم کفایت می‌کند.
+  return html.replace(re, '<span class="hl">$1</span>');
+}
+
+function renderTsPage(){
+  const pages = getActivePages();
+  if (pages.length === 0){
+    document.getElementById('tsContent').innerHTML = `<p>نتیجه‌ای یافت نشد.</p>`;
+    document.getElementById('tsPageIndicator').textContent = `۰ نتیجه`;
+    document.getElementById('tsPrev').disabled = true;
+    document.getElementById('tsNext').disabled = true;
+    return;
+  }
+
+  // اگر tsIndex خارج از محدودهٔ pages باشد، آن را اصلاح کن
+  if (!pages.includes(tsIndex)) tsIndex = pages[0];
+
+  const contentEl = document.getElementById('tsContent');
+  const rawHTML = tsPages[tsIndex];
+  contentEl.innerHTML = searchTerm ? highlightHTML(rawHTML, searchTerm) : rawHTML;
+
+  const currentPos = pages.indexOf(tsIndex) + 1;
+  document.getElementById('tsPageIndicator').textContent = `صفحه ${currentPos} از ${pages.length}`;
+  document.getElementById('tsPrev').disabled = currentPos === 1;
+  document.getElementById('tsNext').disabled = currentPos === pages.length;
+}
+
+function gotoPrev(){
+  const pages = getActivePages();
+  const pos = pages.indexOf(tsIndex);
+  if (pos > 0){ tsIndex = pages[pos-1]; renderTsPage(); }
+}
+function gotoNext(){
+  const pages = getActivePages();
+  const pos = pages.indexOf(tsIndex);
+  if (pos < pages.length-1){ tsIndex = pages[pos+1]; renderTsPage(); }
+}
+
+document.getElementById('tsPrev').addEventListener('click', gotoPrev);
+document.getElementById('tsNext').addEventListener('click', gotoNext);
+document.getElementById('tsClose').addEventListener('click', closeTroubleshooting);
+document.getElementById('tsOverlay').addEventListener('click', (e)=>{ if(e.target.id==='tsOverlay') closeTroubleshooting(); });
+
+// جستجوی زنده با debounce سبک
+let tsSearchTimer = null;
+document.getElementById('tsSearch').addEventListener('input', (e)=>{
+  const value = e.target.value.trim();
+  clearTimeout(tsSearchTimer);
+  tsSearchTimer = setTimeout(()=>{
+    searchTerm = value;
+    if(!searchTerm){
+      matchedPages = null; // همهٔ صفحات
+      // tsIndex را روی نزدیک‌ترین صفحهٔ قبلی نگه داریم
+      renderTsPage();
+      return;
+    }
+    const s = searchTerm.toLowerCase();
+    matchedPages = tsPages
+      .map((html, i) => ({ i, hit: html.toLowerCase().includes(s) }))
+      .filter(x => x.hit)
+      .map(x => x.i);
+
+    // اگر صفحهٔ فعلی داخل نتایج نیست، برو به اولین نتیجه
+    if (!matchedPages.includes(tsIndex)) tsIndex = matchedPages[0] || 0;
+    renderTsPage();
+  }, 120);
+});
+
+document.getElementById('tsClear').addEventListener('click', ()=>{
+  document.getElementById('tsSearch').value = '';
+  searchTerm = ''; matchedPages = null; renderTsPage();
+});
 
 /* شروع */
 updateProgress();
@@ -558,4 +600,3 @@ updateProgress();
 
 </body>
 </html>
-
