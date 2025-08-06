@@ -399,13 +399,41 @@ function clearInputs(){
 }
 
 /* پرینت/اکسل/HTML */
-function printReport(){
+function printReport() {
+  // پرسش تأیید قبل از هر تغییری
+  const ok = confirm('آیا از چاپ گزارش مطمئن هستید؟');
+  if (!ok) return; // لغو شد ⇒ هیچ کاری انجام نده
+
+  // مقداردهی هدر چاپ فقط اگر چاپ تأیید شده باشد
   const name = prompt('نام کارشناس', 'مهندس خانی') || 'مهندس خانی';
   document.getElementById('reporterName').textContent = name;
   document.getElementById('containerSelected').textContent = document.getElementById('containerType').value || '-';
   document.getElementById('analysisDate').textContent = new Date().toLocaleDateString('fa-IR');
-  const hdr=document.getElementById('printHeader'); const prevVis=hdr.style.visibility; hdr.style.visibility='visible'; window.print(); hdr.style.visibility=prevVis||'hidden';
+
+  const hdr = document.getElementById('printHeader');
+  const prevVis = hdr.style.visibility;
+  const restore = () => {
+    hdr.style.visibility = prevVis || 'hidden';
+    window.removeEventListener('afterprint', restore);
+  };
+
+  // هدر برای حالت پرینت قابل‌مشاهده شود
+  hdr.style.visibility = 'visible';
+
+  // بعد از اتمام/لغو چاپ، هدر را به حالت قبل برگردان
+  window.addEventListener('afterprint', restore);
+
+  // اجرای چاپ + fallback برای مرورگرهایی که afterprint را روی Cancel فراخوانی نمی‌کنند
+  try {
+    window.print();
+  } finally {
+    // اگر afterprint تا 1200ms نیامد، خودمان ریستور کنیم
+    setTimeout(() => {
+      if (hdr.style.visibility === 'visible') restore();
+    }, 1200);
+  }
 }
+
 function exportToExcel(){
   const table=document.getElementById('resultsTable').outerHTML;
   const warningsHTML=document.getElementById('warningList').outerHTML;
@@ -639,5 +667,6 @@ updateProgress();
 
 </body>
 </html>
+
 
 
