@@ -400,7 +400,7 @@ function clearInputs(){
 
 /* پرینت/اکسل/HTML */
 function printReport(){
-  const name = "مهندس خانی";
+  const name = prompt('نام کارشناس', 'مهندس خانی') || 'مهندس خانی';
   document.getElementById('reporterName').textContent = name;
   document.getElementById('containerSelected').textContent = document.getElementById('containerType').value || '-';
   document.getElementById('analysisDate').textContent = new Date().toLocaleDateString('fa-IR');
@@ -425,7 +425,7 @@ function exportToExcel(){
   setTimeout(()=>alert('پس از ذخیره فایل اکسل، روی فایل راست‌کلیک کرده و گزینه "Unblock" را فعال کنید.'), 200);
 }
 function saveAsHTML(){
-  const name = prompt('نام گزارشگر', 'مهندس خانی') || 'مهندس خانی';
+  const name = prompt('نام کارشناس', 'مهندس خانی') || 'مهندس خانی';
   const date = new Date().toLocaleDateString('fa-IR');
   const hdr=document.getElementById('printHeader'); const prevVis=hdr.style.visibility;
   hdr.style.visibility='visible';
@@ -639,3 +639,4 @@ updateProgress();
 
 </body>
 </html>
+
