@@ -296,7 +296,7 @@ function addTemplate(){
   clearInfoByTitle(title);
 
   if(warns.length > 0){ addWarning(`${title}: ${warns.join(' ؛ ')}`); }
-  if (isEditing) { const baseTemplate = `قالب ${editingIndex + 1}`; addInfo(`${title}: جهت اصلاح ${baseTemplate} ثبت شد`); }
+  if (isEditing) { const baseTemplate = `قالب ${editingIndex + 1}`; addInfo(`${title}:   ${baseTemplate}  اصلاح شد`); }
 
   correctionHistory.push({ title, count: warns.length });
   renderCorr();
@@ -667,6 +667,7 @@ updateProgress();
 
 </body>
 </html>
+
 
 
 
