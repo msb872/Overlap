@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -73,7 +74,7 @@
 <p class="info-text" id="infoText">🔹 تمام مقادیر بر حسب <strong>0.001 اینچ</strong> هستند 🔹</p>
 
 <div class="row-2selects">
-  <label for="containerType">نوع ظرف:</label>
+<label for="containerType">نوع ظرف:</label>
 <input list="containerTypes" id="containerType" name="containerType" placeholder="نوع ظرف را وارد یا انتخاب کنید">
 <datalist id="containerTypes">
   <option value="قوطی 400 گرمی چاپدار">
@@ -92,6 +93,12 @@
   <option value="حلب 17 کیلویی ساده">
 </datalist>
 
+  <label>📐 واحد ورودی:
+    <select id="unitSelect">
+      <option value="thou">0.001 اینچ</option>
+      <option value="mm">میلیمتر</option>
+    </select>
+  </label>
 </div>
 
 <div class="input-row">
@@ -671,8 +678,3 @@ updateProgress();
 
 </body>
 </html>
-
-
-
-
-
