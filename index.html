@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>درصد درگیری دربندی قوطی فلزی - با عیب‌یابی و جستجوی زنده</title>
+  <title>درصد درگیری دربندی قوطی فلزی</title>
   <style>
     body { font-family: Tahoma, sans-serif; background:#eef2f7; direction:rtl; margin:0; padding:6px; color:#333; }
     header { background:#0077b6; color:#fff; padding:8px; border-radius:6px; text-align:center; margin-bottom:10px; }
@@ -67,27 +67,31 @@
 
 <header>
   <h2>برنامه محاسبه درصد درگیری قوطی فلزی v1.18</h2>
-  <p>تهیه‌کننده: مصیب خانی - کارشناس کنترل کیفیت کارخانه یک ویک دشت مرغاب</p>
+  <p>تهیه‌کننده: مصیب خانی - کارشناس آزمایشگاه و کنترل کیفیت فرآورده های غذایی دشت مرغاب (یک ویک)</p>
 </header>
 
 <p class="info-text" id="infoText">🔹 تمام مقادیر بر حسب <strong>0.001 اینچ</strong> هستند 🔹</p>
 
 <div class="row-2selects">
-  <label>📦 نوع ظرف:
-    <select id="containerType">
-      <option>انتخاب</option><option>قوطی 400 گرمی چاپدار</option><option>قوطی 420 گرمی چاپدار</option>
-      <option>قوطی 770 گرمی چاپدار</option><option>قوطی 800 گرمی چاپدار</option><option>قوطی 4000 گرمی چاپدار</option>
-      <option>حلب 16 کیلویی چاپدار</option><option>حلب 17 کیلویی چاپدار</option><option>قوطی 400 گرمی ساده</option><option>قوطی 420 گرمی ساده</option>
-      <option>قوطی 770 گرمی ساده</option><option>قوطی 800 گرمی ساده</option><option>قوطی 4000 گرمی ساده</option><option>حلب 16 کیلویی ساده</option>
-      <option>حلب 17 کیلویی ساده</option>
-    </select>
-  </label>
-  <label>📐 واحد ورودی:
-    <select id="unitSelect">
-      <option value="thou">0.001 اینچ</option>
-      <option value="mm">میلیمتر</option>
-    </select>
-  </label>
+  <label for="containerType">نوع ظرف:</label>
+<input list="containerTypes" id="containerType" name="containerType" placeholder="نوع ظرف را وارد یا انتخاب کنید">
+<datalist id="containerTypes">
+  <option value="قوطی 400 گرمی چاپدار">
+  <option value="قوطی 420 گرمی چاپدار">
+  <option value="قوطی 770 گرمی چاپدار">
+  <option value="قوطی 800 گرمی چاپدار">
+  <option value="قوطی 4000 گرمی چاپدار">
+  <option value="حلب 16 کیلویی چاپدار">
+  <option value="حلب 17 کیلویی چاپدار">
+  <option value="قوطی 400 گرمی ساده">
+  <option value="قوطی 420 گرمی ساده">
+  <option value="قوطی 770 گرمی ساده">
+  <option value="قوطی 800 گرمی ساده">
+  <option value="قوطی 4000 گرمی ساده">
+  <option value="حلب 16 کیلویی ساده">
+  <option value="حلب 17 کیلویی ساده">
+</datalist>
+
 </div>
 
 <div class="input-row">
@@ -169,7 +173,7 @@
 </div>
 
 <div id="pageFooter">
-  © ۲۰۲۵ کارخانه یک‌و‌یک | نویسنده: مصیب خانی
+  © ۲۰۲۵ فرآورده های غذایی دشت مرغاب | نویسنده: مصیب خانی
 </div>
 
 <script>
@@ -667,6 +671,7 @@ updateProgress();
 
 </body>
 </html>
+
 
 
 
