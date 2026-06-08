@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -488,7 +491,15 @@ function saveAsHTML(){
 function showHelp(){
   const helpHTML = `
 <div style="font-family:Tahoma; direction:rtl; line-height:1.6; background:#f9f9f9; border-radius:10px; padding:15px; border:1px solid #ccc; max-width:600px; margin:auto;">
+
   <h2 style="color:#2c3e50; text-align:center;">📘 راهنمای سریع برنامه درصد درگیری</h2>
+
+  <!-- تصویر نویسنده -->
+  <div style="text-align:center; margin:10px 0;">
+    <img src="author.jpg" alt="نویسنده"
+      style="width:120px;height:120px;border-radius:50%;border:2px solid #3498db;object-fit:cover;">
+  </div>
+
   <p style="text-align:center; color:#555; font-size:14px;">
     این برنامه برای محاسبه درصد درگیری (Overlap) و بررسی پارامترهای دربندی قوطی فلزی طراحی شده است.
   </p>
@@ -504,7 +515,8 @@ function showHelp(){
 
   <div style="background:#eef6ff; padding:10px; border-radius:8px; margin-top:10px; font-size:13px;">
     <b>📏 حدود مجاز:</b><br>
-    CH ≥ 1.78mm ، BH ≥ 1.78mm ، ΔH ≤ 0.20mm ، FS ≤ 0.19mm ، OL% ≥ 45%<br>
+    CH ≥ 1.78mm ، BH ≥ 1.78mm ، ΔH ≤ 0.20mm ، FS ≤ 0.19mm ، OL% ≥ 45%
+    <br>
     <span style="color:#777;">واحد هشدارها بر اساس واحد انتخابی شما است.</span>
   </div>
 
@@ -516,16 +528,23 @@ function showHelp(){
   <p style="text-align:center; margin-top:10px; font-size:12px; color:#777;">
     © ۲۰۲۵ - مصیب خانی - کارخانه یک‌و‌یک
   </p>
+
   <div style="text-align:center;">
-    <button id="helpCloseBtn" style="padding:8px 15px; border:none; background:#3498db; color:white; border-radius:5px; cursor:pointer;">بستن</button>
+    <button id="helpCloseBtn"
+      style="padding:8px 15px; border:none; background:#3498db; color:white; border-radius:5px; cursor:pointer;">
+      بستن
+    </button>
   </div>
+
 </div>`;
+
   const helpBox = document.getElementById('helpBox');
   helpBox.innerHTML = helpHTML;
   document.getElementById('helpOverlay').style.display = 'flex';
-  document.getElementById('helpCloseBtn').onclick = () => { document.getElementById('helpOverlay').style.display = 'none'; };
+  document.getElementById('helpCloseBtn').onclick = () => {
+    document.getElementById('helpOverlay').style.display = 'none';
+  };
 }
-
 /* ---------- Troubleshooting content (pages) ---------- */
 const tsPages = [
 `<p>پس از تنظیمات اولیه دستگاه دربندی و نمونه‌برداری و آزمایشات لازم، در صورت وجود اشکال و با فرض استاندارد بودن تمامی ابعاد فنی قوطی‌های ساخته‌شده، مطابق موارد زیر اقدام کنید.</p>
