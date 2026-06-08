@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -300,11 +301,26 @@ function addTemplate(){
   renderCorr();
 
   // ریست فرم و حالت اصلاح
-  inputsOrder.forEach(id => document.getElementById(id).value = '');
-  isEditing = false;
-  editingIndex = -1;
-  document.getElementById('calcBtn').textContent = '➕ محاسبه/جدید';
-  updateProgress();
+// ریست فرم و حالت اصلاح
+isEditing = false;
+editingIndex = -1;
+document.getElementById('calcBtn').textContent = '➕ محاسبه/جدید';
+
+// فقط این فیلدها پاک شوند
+document.getElementById('length').value = '';
+document.getElementById('seamThickness').value = '';
+document.getElementById('coverHook').value = '';
+document.getElementById('bodyHook').value = '';
+
+// فوکوس روی طول دوخت
+// فوکوس روی طول دوخت
+const lengthBox = document.getElementById('length');
+lengthBox.focus();
+lengthBox.select();
+
+updateProgress();
+
+
 }
 
 /* شمارنده قالب‌های اصلی (نه اصلاحیه‌ها) بر اساس عنوان ستون‌ها */
