@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>درصد درگیری دربندی قوطی فلزی</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h2>برنامه محاسبه درصد درگیری قوطی فلزی v2.00</h2>
+  <p>تهیه‌کننده: مصیب خانی - کارشناس کنترل کیفیت کارخانه یک ویک دشت مرغاب</p>
+</header>
+
+<p class="info-text" id="infoText">🔹 تمام مقادیر بر حسب <strong>0.001 اینچ</strong> هستند 🔹</p>
+
+<div class="row-2selects">
+  <label>📦 نوع ظرف:
+    <select id="containerType">
+      <option>انتخاب</option><option>قوطی 400 گرمی چاپدار</option><option>قوطی 420 گرمی چاپدار</option>
+      <option>قوطی 770 گرمی چاپدار</option><option>قوطی 800 گرمی چاپدار</option><option>قوطی 4000 گرمی چاپدار</option>
+      <option>حلب 16 کیلویی چاپدار</option><option>حلب 17 کیلویی چاپدار</option><option>قوطی 400 گرمی ساده</option><option>قوطی 420 گرمی ساده</option>
+      <option>قوطی 770 گرمی ساده</option><option>قوطی 800 گرمی ساده</option><option>قوطی 4000 گرمی ساده</option><option>حلب 16 کیلویی ساده</option>
+      <option>حلب 17 کیلویی ساده</option>
+    </select>
+  </label>
+  <label>📐 واحد ورودی:
+    <select id="unitSelect">
+      <option value="thou">0.001 اینچ</option>
+      <option value="mm">میلیمتر</option>
+    </select>
+  </label>
+</div>
+
+<div class="input-row">
+  <label> طول دوخت-SL<input type="number" id="length" min="0" step="0.01" autocomplete="off"></label>
+  <label>دوخت ضخامت-ST<input type="number" id="seamThickness" min="0" step="0.01" autocomplete="off"></label>
+  <label>قلاب درب-CH<input type="number" id="coverHook" min="0" step="0.01" autocomplete="off"></label>
+  <label>قلاب بدنه-BH<input type="number" id="bodyHook" min="0" step="0.01" autocomplete="off"></label>
+  <label>ضخامت ورق سر-Te<input type="number" id="headThickness" min="0" step="0.01" autocomplete="off"></label>
+  <label>ضخامت ورق بدنه-Tb<input type="number" id="bodyThickness" min="0" step="0.01" autocomplete="off"></label>
+
+  <!-- دکمه‌ها زیر SL و ورودی‌ها -->
+  <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center; width:100%; margin-top:6px;">
+    <button id="calcBtn" onclick="addTemplate()">➕ محاسبه/جدید</button>
+    <button onclick="printReport()">🖨️ پرینت</button>
+    <button onclick="exportToExcel()">📤 Excel</button>
+    <button onclick="saveAsHTML()">💾 HTML</button>
+    <button onclick="showHelp()">ℹ️ راهنما</button>
+    <button onclick="openTroubleshooting()">📚 عیب‌یابی</button>
+  </div>
+</div>
+
+<div class="progress-bar-container"><div class="progress-bar" id="progress"></div></div>
+
+<div id="printArea">
+  <div id="printHeader">
+    <div>📅 تاریخ: <span id="analysisDate"></span></div>
+    <div>📦 ظرف: <span id="containerSelected"></span></div>
+    <div>👤 گزارشگر: <span id="reporterName"></span></div>
+  </div>
+
+  <table id="resultsTable" dir="rtl">
+    <thead>
+      <tr id="headerRow"><th>ویژگی‌ها</th></tr>
+    </thead>
+    <tbody id="tableBody">
+      <tr><td>دوخت طول (SL)</td></tr>
+      <tr><td>دوخت ضخامت (ST)</td></tr>
+      <tr><td>قلاب درب (CH)</td></tr>
+      <tr><td>قلاب بدنه (BH)</td></tr>
+      <tr><td>ضخامت سر (Te)</td></tr>
+      <tr><td>ضخامت بدنه (Tb)</td></tr>
+      <tr><td>قلاب اختلاف (ΔH)</td></tr>
+      <tr><td>فضای آزاد (FS)</td></tr>
+      <tr><td>درصد درگیری (OL%)</td></tr>
+      <tr><td>چروکیدگی (Wr)</td></tr>
+      <tr><td>تیزکردگی (Sh)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="warnings">
+  <strong>⚠️ موارد نیازمند اصلاح و پیام‌ها:</strong>
+  <div id="warningList"></div>
+  <div id="correctionMessage"></div>
+</div>
+
+<!-- Help Overlay -->
+<div id="helpOverlay">
+  <div id="helpBox"></div>
+</div>
+
+<!-- Troubleshooting Overlay (multi-page + live search) -->
+<div id="tsOverlay" aria-hidden="true">
+  <div id="tsBox">
+    <div id="tsHeader">
+      <h3>راهنمای عیب‌یابی دستگاه دربندی</h3>
+      <div class="tsSearchWrap">
+        <input id="tsSearch" type="text" placeholder="جستجوی زنده..." />
+        <button id="tsClear" title="پاک‌کردن جستجو">پاک</button>
+      </div>
+      <button id="tsClose">بستن</button>
+    </div>
+    <div id="tsContent"></div>
+    <div id="tsFooter">
+      <button class="tsBtn" id="tsPrev">قبلی</button>
+      <span id="tsPageIndicator">صفحه 1 از N</span>
+      <button class="tsBtn" id="tsNext">بعدی</button>
+    </div>
+  </div>
+</div>
+
+<div id="pageFooter">
+  © ۲۰۲۵ کارخانه یک‌و‌یک | نویسنده: مصیب خانی
+</div>
+
+<script src="script.js" defer></script>
+</body>
+</html>

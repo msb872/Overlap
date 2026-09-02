@@ -1,0 +1,380 @@
+body {
+  font-family: Tahoma, sans-serif;
+  background: #eef2f7;
+  direction: rtl;
+  margin: 0;
+  padding: 6px;
+  color: #333;
+}
+
+header {
+  background: #0077b6;
+  color: #fff;
+  padding: 8px;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.info-text {
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.input-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.input-row label {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+  background: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.input-row input,
+.input-row select {
+  margin-top: 6px;
+  padding: 6px 8px;
+  font-size: 14px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+}
+
+.input-row button {
+  align-self: flex-end;
+  background: #0077b6;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 24px;
+  width: 160px;
+}
+
+.input-row button:hover {
+  background: #005f99;
+}
+
+.row-2selects {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.progress-bar-container {
+  width: 90%;
+  max-width: 500px;
+  margin: 10px auto;
+  background: #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 18px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #0077b6, #00c4cc);
+  transition: width 0.3s;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  margin-top: 10px;
+}
+
+th,
+td {
+  border: 1px solid #555;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+th {
+  background: #f0f4f8;
+}
+
+#warnings {
+  margin: 10px 16px;
+}
+
+#warnings strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+#warnings .warningItem {
+  background: #ffe6e6;
+  padding: 6px 10px;
+  margin: 4px 0;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.3;
+  text-align: justify;
+  border: 1px solid #ffb3b3;
+}
+
+#warnings .infoItem {
+  background: #e6f4ff;
+  padding: 6px 10px;
+  margin: 4px 0;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.3;
+  text-align: justify;
+  border: 1px solid #b3daff;
+}
+
+#correctionMessage {
+  margin-top: 10px;
+  border-top: 1px solid #999;
+  padding-top: 6px;
+  font-size: 14px;
+  color: #0077b6;
+  word-break: break-word;
+}
+
+/* Help overlay */
+#helpOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#helpBox {
+  background: #fff;
+  max-width: 600px;
+  width: 90%;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  text-align: right;
+  line-height: 1.6;
+  position: relative;
+  font-size: 14px;
+  color: #333;
+}
+
+#helpCloseBtn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* Troubleshooting overlay (multi-page + live search) */
+#tsOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+}
+
+#tsBox {
+  background: #ffffff;
+  width: min(820px, 92vw);
+  max-height: 88vh;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+}
+
+#tsHeader {
+  padding: 10px 12px;
+  background: #0d6efd;
+  color: #fff;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#tsHeader h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.tsSearchWrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 6px;
+  border-radius: 8px;
+}
+
+#tsSearch {
+  border: none;
+  outline: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  width: 220px;
+}
+
+#tsClear {
+  border: none;
+  background: #fff;
+  color: #0d6efd;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#tsClose {
+  background: #fff;
+  color: #0d6efd;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#tsContent {
+  padding: 14px 18px;
+  overflow: auto;
+  line-height: 1.9;
+  color: #2c3e50;
+}
+
+#tsFooter {
+  padding: 10px 14px;
+  background: #f6f8fa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tsBtn {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #0d6efd;
+  color: #fff;
+  font-size: 14px;
+}
+
+.tsBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#tsPageIndicator {
+  font-size: 13px;
+  color: #555;
+}
+
+.tsList {
+  margin: 0;
+  padding-inline-start: 18px;
+}
+
+.tsList li {
+  margin-bottom: 8px;
+  text-align: justify;
+}
+
+.hl {
+  background: #fff59d;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+#pageFooter {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #f1f1f1;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 14px;
+  border-top: 1px solid #ccc;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printArea,
+  #printArea *,
+  #warnings,
+  #warnings *,
+  #correctionMessage,
+  #pageFooter,
+  #printHeader,
+  #printFooter {
+    visibility: visible !important;
+  }
+  #printArea {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  .footer-buttons {
+    display: none !important;
+  }
+}
+
+#printHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-bottom: 1px solid #999;
+  padding-bottom: 8px;
+  visibility: hidden;
+}
+
+#printHeader div {
+  width: 33%;
+  text-align: center;
+}
+
+#printFooter {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 8px;
+  visibility: hidden;
+}
