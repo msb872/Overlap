@@ -1,0 +1,23 @@
+{
+  "id": "./",
+  "name": "محاسبه درصد درگیری قوطی فلزی",
+  "short_name": "Overlap QC",
+  "description": "محاسبه و بررسی پارامترهای دربندی قوطی فلزی",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#eef2f7",
+  "theme_color": "#0077b6",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "./assets/overlap-icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
