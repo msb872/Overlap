@@ -2,6 +2,15 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0077b6" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Overlap QC" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./assets/overlap-icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./assets/overlap-icon.svg" />
   <title>درصد درگیری دربندی قوطی فلزی - با عیب‌یابی و جستجوی زنده</title>
   <style>
     body { font-family: Tahoma, sans-serif; background:#eef2f7; direction:rtl; margin:0; padding:6px; color:#333; }
@@ -59,6 +68,52 @@
     #printHeader{ display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px; font-weight:bold; border-bottom:1px solid #999; padding-bottom:8px; visibility:hidden; }
     #printHeader div{ width:33%; text-align:center; }
     #printFooter{ text-align:center; font-size:12px; color:#666; margin-top:20px; border-top:1px solid #ccc; padding-top:8px; visibility:hidden; }
+  
+    /* Mobile/PWA enhancements */
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body { padding: max(6px, env(safe-area-inset-top)) 8px max(58px, env(safe-area-inset-bottom)); }
+    input, select, button { font: inherit; }
+    button, select, input { touch-action: manipulation; }
+    button { min-height: 42px; }
+    table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; }
+    th, td { min-width: 88px; padding: 8px 6px; }
+    #pageFooter { width: 100%; padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); }
+    #pwaInstallButton {
+      position: fixed; z-index: 1200; left: 12px; bottom: calc(56px + env(safe-area-inset-bottom));
+      border: 0; border-radius: 999px; padding: 11px 17px; min-height: 46px;
+      color: #fff; background: #0077b6; box-shadow: 0 3px 14px rgba(0,0,0,.22);
+      font-weight: 700; cursor: pointer;
+    }
+    #pwaInstallButton[hidden] { display: none !important; }
+    @media (max-width: 600px) {
+      body { padding-left: 6px; padding-right: 6px; }
+      header { padding: 10px 8px; }
+      header h2 { font-size: 18px; line-height: 1.6; margin: 4px 0; }
+      header p { font-size: 11px; line-height: 1.7; margin: 4px 0; }
+      .input-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+      .input-row label { width: auto; min-width: 0; padding: 8px; font-size: 12px; }
+      .input-row input, .input-row select { width: 100%; min-width: 0; min-height: 42px; font-size: 16px; }
+      .input-row > div { grid-column: 1 / -1; }
+      .input-row > div button { flex: 1 1 42%; width: auto !important; margin-top: 0 !important; padding: 9px 7px !important; font-size: 13px !important; }
+      .row-2selects { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+      .row-2selects label { min-width: 0; font-size: 12px; }
+      .row-2selects select { width: 100%; min-height: 42px; font-size: 14px; }
+      .progress-bar-container { width: 96%; }
+      th, td { font-size: 12px; min-width: 82px; }
+      #warnings { margin: 10px 4px; }
+      #warnings .warningItem, #warnings .infoItem { font-size: 12px; }
+      #tsBox { width: 96vw; max-height: 92dvh; }
+      #tsSearch { width: min(42vw, 190px); }
+      #tsContent { padding: 12px; font-size: 13px; }
+      #helpBox { max-height: 90dvh; overflow: auto; padding: 14px; }
+      #pageFooter { font-size: 11px; }
+    }
+    @media (max-width: 360px) {
+      .input-row { grid-template-columns: 1fr 1fr; }
+      .input-row > div button { flex-basis: 100%; }
+    }
+
   </style>
 </head>
 <body>
@@ -448,7 +503,55 @@ function exportToExcel(){
     </style>`;
   const html = `<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8">${style}</head><body>
     ${table}<h3>پیام‌ها</h3>${warningsHTML}${corrHTML}
-  </body></html>`;
+  <script>
+(() => {
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js", { scope: "./" }).catch(err => {
+        console.warn("PWA service worker registration failed:", err);
+      });
+    });
+  }
+
+  let installPrompt = null;
+  const installButton = document.createElement("button");
+  installButton.type = "button";
+  installButton.id = "pwaInstallButton";
+  installButton.textContent = "📲 نصب برنامه";
+  installButton.setAttribute("aria-label", "نصب برنامه روی دستگاه");
+  document.body.appendChild(installButton);
+
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+
+  if (isStandalone) {
+    installButton.hidden = true;
+  } else if (isIOS) {
+    installButton.addEventListener("click", () => {
+      alert("برای نصب در iPhone یا iPad: دکمه Share مرورگر Safari را بزنید، سپس گزینه Add to Home Screen را انتخاب و Add را لمس کنید.");
+    });
+  } else {
+    installButton.hidden = true;
+    window.addEventListener("beforeinstallprompt", event => {
+      event.preventDefault();
+      installPrompt = event;
+      installButton.hidden = false;
+    });
+    installButton.addEventListener("click", async () => {
+      if (!installPrompt) return;
+      installPrompt.prompt();
+      await installPrompt.userChoice;
+      installPrompt = null;
+      installButton.hidden = true;
+    });
+    window.addEventListener("appinstalled", () => {
+      installButton.hidden = true;
+      installPrompt = null;
+    });
+  }
+})();
+</script>
+</body></html>`;
   const blob=new Blob([html], {type:'application/vnd.ms-excel'}); const url=URL.createObjectURL(blob);
   const a=document.createElement('a'); a.href=url; a.download='تحلیل_درگیری.xls'; a.click(); URL.revokeObjectURL(url);
   setTimeout(()=>alert('پس از ذخیره فایل اکسل، روی فایل راست‌کلیک کرده و گزینه "Unblock" را فعال کنید.'), 200);
